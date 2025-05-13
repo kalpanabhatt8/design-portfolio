@@ -48,7 +48,9 @@ const Header = () => {
 
   return (
 <>
-    <nav className="flex justify-between py-5 px-8">
+<div className='w-[100%] flex justify-center items-center bg-[#F8F8F8]'>
+    <div className='container'>
+  <nav className="flex justify-between py-5 px-8">
       <h1
         className={`font-bold transition-opacity  h-[1.85rem] 
         }`}
@@ -69,6 +71,8 @@ const Header = () => {
         <li><NavLink to="/">Resume</NavLink></li>
       </ul>
     </nav>
+  </div>
+</div>
 
 
   
