@@ -2,7 +2,7 @@ const Home = () => {
   const thumbnailURL = 'https://img.youtube.com/vi/jkJAzNpy2aA/hqdefault.jpg'; // Replace with your video ID
 
   return (
-    <div className="relative w-40 h-40 rounded-full overflow-hidden shadow-lg border-4 border-white">
+    <div className="w-16 h-16 rounded-full overflow-hidden border-4 border-white ">
       <img
         src={thumbnailURL}
         alt="Now Playing"
