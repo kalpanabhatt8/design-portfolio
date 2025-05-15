@@ -3,7 +3,8 @@ import ReactDOM from 'react-dom/client';
 import { RouterProvider, createBrowserRouter, useLocation } from 'react-router-dom';
 import './index.css';
 import Layout from './Layout';
-import Home from './components/Home/Home';
+import Home from './components/Home';
+
 
 
 // ScrollToTop component defined inline

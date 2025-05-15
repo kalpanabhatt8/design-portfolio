@@ -8,7 +8,10 @@ module.exports = {
     extend: {
       animation: {
         'spin-slow': 'spin 4s linear infinite'
-      }
+      },
+      backgroundImage: {
+        'hero-pattern': "url('public/Textures/sandpaper.png')",
+      },
     },
   },
   plugins: [],

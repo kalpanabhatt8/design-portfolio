@@ -1,7 +1,7 @@
 import { Outlet, useLocation } from 'react-router-dom'
 import { useEffect } from "react"
-import Header from './components/Header/Header'
-
+import Header from './components/Header'
+import CustomCursor from './components/CustomCursor'
 const Layout = () => {
     const { pathname } = useLocation()
     useEffect(() => {
@@ -49,10 +49,11 @@ const Layout = () => {
 
 
     return (
-        <>
+        <div className="min-h-screen bg-hero-pattern bg-cover bg-center">
+              <CustomCursor />
             <Header/>
             <Outlet />
-        </>
+        </div>
     )
 }
 
