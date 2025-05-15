@@ -86,21 +86,20 @@ const Home = () => {
           className="text-lg text-center w-full sm:w-[90vw] md:w-[70vw] lg:w-[50vw] leading-normal flex flex-wrap justify-center gap-x-1 z-10"
         >
           {words.map((word, i) => (
-    <span
-    key={i}
-    ref={(el) => (textRef.current[i] = el)}
-    className={`transition-colors duration-200 ${
-      ["supermom", "equations", "lo-fi", "chaos", "half-baked"].some((w) =>
-        word.toLowerCase().includes(w)
-      )
-        ? "text-[#969696] hover:text-[#FF800A] cursor-pointer"
-        : "text-black"
-    }`}
-  >
-    {word}
-  </span>
-  
-       
+            <span
+              key={i}
+              ref={(el) => (textRef.current[i] = el)}
+              className={`transition-colors duration-200 ${["supermom", "equations", "lo-fi", "chaos", "half-baked"].some((w) =>
+                word.toLowerCase().includes(w)
+              )
+                  ? "text-[#969696] hover:text-[#FF800A] cursor-pointer"
+                  : "text-black"
+                }`}
+            >
+              {word}
+            </span>
+
+
           ))}
         </h1>
 
