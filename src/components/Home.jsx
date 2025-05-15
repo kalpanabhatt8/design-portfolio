@@ -3,7 +3,6 @@ import { useLayoutEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import thumbnailURL from "../assets/shreyaji.png";
 import ytIcon from "../assets/youtube-color-icon.svg";
-import CustomCursor from "./CustomCursor";
 
 const Home = () => {
   const [hovered, setHovered] = useState(null);
@@ -82,23 +81,29 @@ const Home = () => {
         </Link>
 
         {/* Hero Text */}
-        <h1 className="text-lg text-center w-full sm:w-[90vw] md:w-[70vw] lg:w-[50vw] leading-normal flex flex-wrap justify-center gap-x-1 z-10">
+        <h1
+          data-cursor-hide="true"
+          className="text-lg text-center w-full sm:w-[90vw] md:w-[70vw] lg:w-[50vw] leading-normal flex flex-wrap justify-center gap-x-1 z-10"
+        >
           {words.map((word, i) => (
-            <span
-              key={i}
-              ref={(el) => (textRef.current[i] = el)}
-              className={`${
-                ["supermom", "equations", "lo-fi", "chaos", "half-baked"].some((w) =>
-                  word.toLowerCase().includes(w)
-                )
-                  ? "text-[#969696] cursor-hover"
-                  : "text-black"
-              }`}
-            >
-              {word}
-            </span>
+    <span
+    key={i}
+    ref={(el) => (textRef.current[i] = el)}
+    className={`transition-colors duration-200 ${
+      ["supermom", "equations", "lo-fi", "chaos", "half-baked"].some((w) =>
+        word.toLowerCase().includes(w)
+      )
+        ? "text-[#969696] hover:text-[#FF800A] cursor-pointer"
+        : "text-black"
+    }`}
+  >
+    {word}
+  </span>
+  
+       
           ))}
         </h1>
+
       </div>
     </>
   );
