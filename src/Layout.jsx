@@ -1,10 +1,11 @@
 import { Outlet, useLocation } from 'react-router-dom'
 import { useEffect } from "react"
-
+import Header from './components/Header'
+import CustomCursor from './components/CustomCursor'
 const Layout = () => {
     const { pathname } = useLocation()
     useEffect(() => {
-        const metaTags= {
+        const metaTags = {
             '/': {
                 title: "Home",
                 description: "This is the home page of the website",
@@ -48,12 +49,11 @@ const Layout = () => {
 
 
     return (
-        <>
-            {/* <Header /> */}
-            <p>This is layout</p>
+        <div className="min-h-screen bg-hero-pattern bg-cover bg-center">
+              <CustomCursor />
+            <Header/>
             <Outlet />
-            {/* <Footer /> */}
-        </>
+        </div>
     )
 }
 
