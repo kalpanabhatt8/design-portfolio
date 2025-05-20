@@ -1,9 +1,9 @@
 {
+  "homepage": "https://kalpanabhatt8.github.io/design-portfolio",
   "name": "kalpanabhatt",
   "version": "0.0.0",
   "private": true,
   "type": "module",
-  "homepage": "https://kalpanabhatt8.github.io/design-portfolio",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

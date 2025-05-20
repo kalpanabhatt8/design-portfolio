@@ -3,6 +3,6 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
 export default defineConfig({
-  base: process.env.NODE_ENV === 'production' ? '/design-portfolio/' : '/', // ✅ Dev works locally
   plugins: [react()],
+  base: process.env.NODE_ENV === 'production' ? '/design-portfolio/' : '/', // ✅ Dev works locally
 });
