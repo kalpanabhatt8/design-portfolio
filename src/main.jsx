@@ -5,9 +5,7 @@ import './index.css';
 import Layout from './Layout';
 import Home from './components/Home';
 
-
-
-// ScrollToTop component defined inline
+// ScrollToTop component
 const ScrollToTop = () => {
   const { pathname } = useLocation();
 
@@ -18,33 +16,26 @@ const ScrollToTop = () => {
   return null;
 };
 
-// Layout component that includes ScrollToTop
-const AppLayout= () => (
+// Layout wrapper
+const AppLayout = () => (
   <>
     <ScrollToTop />
     <Layout />
   </>
 );
 
+// Define router
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <AppLayout />, // Use AppLayout which includes ScrollToTop
+    element: <AppLayout />,
     children: [
       { path: '/', element: <Home /> },
-      // { path: '/aboutus', element: <About /> },
-      // { path: '/services', element: <Services /> },
-      // { path: '/blog', element: <Blog /> },
-      // { path: '/blog/:id', element: <BlogPage /> },
-      // { path: '/insights', element: <Insights /> },
-      // { path: '/gallery', element: <Gallery /> },
-      // { path: '/contact-us', element: <Contact /> },
-      // { path: '/login', element: <LoginAndSignup /> },
-      // { path: '/signup', element: <LoginAndSignup /> },
     ],
   },
 ]);
 
+// Render the app with RouterProvider
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <RouterProvider router={router} />

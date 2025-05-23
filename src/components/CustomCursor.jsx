@@ -44,6 +44,9 @@ const CustomCursor = () => {
     const handleMouseMove = (e) => {
       mouseX = e.clientX - 7;
       mouseY = e.clientY - 7;
+
+      const shouldHide = e.target.closest("[data-cursor-hide='true']");
+      cursor.style.display = shouldHide ? "none" : "block";
     };
 
     const handleBurst = () => {
@@ -96,6 +99,7 @@ const CustomCursor = () => {
           backgroundColor: "#FF800A",
           transition: "background-color 0.3s ease",
           pointerEvents: "none",
+          display: "block",
         }}
       >
         {label}
