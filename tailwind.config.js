@@ -12,6 +12,10 @@ module.exports = {
       backgroundImage: {
         'hero-pattern': "url('public/Textures/sandpaper.png')",
       },
+      fontFamily: {
+        heading: ['"Bricolage Grotesque"', 'sans-serif'],
+        body: ['"General Sans"', 'sans-serif'],
+      },
     },
   },
   plugins: [],
