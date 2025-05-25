@@ -12,6 +12,9 @@ const Home = () => {
   const loaderRef = useRef(null);
   const floatingRefs = useRef([]);
   const dotRefs = useRef([]);
+  const statusRef = useRef(null);
+
+  const loadingStatuses = ["debugging...", "hydrating code...", "calming dev anxiety..."];
 
   const sentence =
     "I’m Kalpana Bhatt — daughter of a supermom, shaped by equations, powered by lo-fi beats, now designing clarity out of chaos. I turn half-baked ideas into elegant, scalable interfaces that just make sense.";
@@ -62,24 +65,32 @@ const Home = () => {
         ease: "power2.inOut",
         onComplete: () => setIsLoading(false),
       });
-    }, 2500);
+    }, 6000);
 
-    floatingRefs.current.forEach((el) => {
+    floatingRefs.current.forEach((el, i) => {
       if (!el) return;
       gsap.to(el, {
         y: "+=10",
         x: "+=10",
-        duration: 3,
+        rotation: "+=5",
+        duration: 3 + Math.random() * 2,
         ease: "sine.inOut",
         yoyo: true,
         repeat: -1,
+      });
+
+      el.addEventListener("mouseenter", () => {
+        el.style.filter = "blur(1px)";
+      });
+      el.addEventListener("mouseleave", () => {
+        el.style.filter = "blur(0px)";
       });
     });
 
     dotRefs.current.forEach((dot, i) => {
       if (!dot) return;
       gsap.to(dot, {
-        y: -6,
+        y: [-4, -6, -5][i % 3],
         repeat: -1,
         yoyo: true,
         ease: "power1.inOut",
@@ -88,7 +99,28 @@ const Home = () => {
       });
     });
 
-    return () => clearTimeout(timeout);
+    setTimeout(() => {
+  if (statusRef.current) {
+    statusRef.current.textContent = "(this might take longer if it’s Monday)";
+  }
+}, 0);
+
+setTimeout(() => {
+  if (statusRef.current) {
+    const msg = loadingStatuses[Math.floor(Math.random() * loadingStatuses.length)];
+    statusRef.current.textContent = msg;
+    gsap.fromTo(
+      statusRef.current,
+      { opacity: 0 },
+      { opacity: 1, duration: 0.3, yoyo: true, repeat: 1, repeatDelay: 0.5 }
+    );
+  }
+}, 5000);
+
+    return () => {
+      clearTimeout(timeout);
+      
+    };
   }, []);
 
   return (
@@ -98,7 +130,6 @@ const Home = () => {
           ref={loaderRef}
           className="relative flex items-center justify-center h-screen w-full bg-[#0F1115] text-white font-bricolage overflow-hidden transition-all duration-500 ease-in-out"
         >
-          {/* Floating Code Particles */}
           <div className="absolute inset-0 z-0 pointer-events-none">
             {["const", "return", "{ }", "div", "<button>", "useState", "=>"].map((word, index) => (
               <span
@@ -115,10 +146,8 @@ const Home = () => {
             ))}
           </div>
 
-          {/* Glow Background */}
           <div className="absolute w-[600px] h-[600px] bg-gradient-to-tr from-[#3BAEFF] via-transparent to-[#0F1115] rounded-full opacity-20 animate-pulse blur-3xl z-0" />
 
-          {/* Centered Text */}
           <div className="z-10 text-center">
             <div className="flex flex-row gap-3 justify-center items-center">
               <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight mb-4">
@@ -129,12 +158,12 @@ const Home = () => {
                   <span
                     key={i}
                     ref={(el) => (dotRefs.current[i] = el)}
-                    className="inline-block w-1 h-1 bg-white rounded-full"
+                    className="inline-block w-1.5 h-1.5 bg-white rounded-full"
                   ></span>
                 ))}
               </div>
             </div>
-            <p className="text-sm italic text-[#d0d0d0]">
+            <p className="text-sm italic text-[#d0d0d0]" ref={statusRef}>
               (this might take longer if it’s Monday)
             </p>
           </div>
@@ -143,7 +172,6 @@ const Home = () => {
 
       {!isLoading && (
         <div className="flex justify-center items-center flex-col gap-[1.5rem] h-[100vh] relative overflow-hidden z-0 bg-white">
-          {/* Music Player */}
           <Link
             to="https://www.youtube.com/watch?v=9pIP8fWEUzo"
             className="flex gap-1 justify-center items-center w-fit relative z-10 cursor-hover"
@@ -168,7 +196,6 @@ const Home = () => {
             />
           </Link>
 
-          {/* Hero Text */}
           <h1
             data-cursor-hide="true"
             className="text-lg text-center w-full sm:w-[90vw] md:w-[70vw] lg:w-[50vw] leading-normal flex flex-wrap justify-center gap-x-1 z-10"
