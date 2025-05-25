@@ -1,111 +1,71 @@
-import { Link } from "react-router-dom";
-import { useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import gsap from "gsap";
-import thumbnailURL from "../assets/shreyaji.png";
-import ytIcon from "../assets/youtube-color-icon.svg";
+import * as THREE from "three";
 
-const Home = () => {
-  const [hovered, setHovered] = useState(null);
-  const ytIconRef = useRef(null);
-  const vibeRef = useRef(null);
-  const textRef = useRef([]);
+export default function Home() {
+  const canvasRef = useRef(null);
+  const words = [
+    "overthinker",
+    "builder",
+    "dreamer",
+    "designer",
+    "debugger",
+    "communicator"
+  ];
 
-  const sentence =
-    "I’m Kalpana Bhatt — daughter of a supermom, shaped by equations, powered by lo-fi beats, now designing clarity out of chaos. I turn half-baked ideas into elegant, scalable interfaces that just make sense.";
-  const words = sentence.split(" ");
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
 
-  useLayoutEffect(() => {
-    const ctx = gsap.context(() => {
-      // Animate music bar
-      gsap.from(vibeRef.current, {
-        opacity: 0,
-        y: 20,
-        duration: 1,
-        ease: "power3.out",
+    const textMeshes = [];
+    const loader = new THREE.FontLoader();
+
+    loader.load("https://threejs.org/examples/fonts/helvetiker_regular.typeface.json", function (font) {
+      words.forEach((word, i) => {
+        const geometry = new THREE.TextGeometry(word, {
+          font: font,
+          size: 1,
+          height: 0.1
+        });
+        const material = new THREE.MeshBasicMaterial({ color: 0xffffff });
+        const textMesh = new THREE.Mesh(geometry, material);
+        textMesh.position.x = (Math.random() - 0.5) * 10;
+        textMesh.position.y = (Math.random() - 0.5) * 10;
+        textMesh.position.z = (Math.random() - 0.5) * 10;
+        scene.add(textMesh);
+        textMeshes.push(textMesh);
       });
 
-      // Animate hero text words
-      gsap.set(textRef.current, { opacity: 0, y: 20 });
+      camera.position.z = 10;
 
-      gsap.to(textRef.current, {
-        opacity: 1,
-        y: 0,
-        stagger: 0.035,
-        duration: 0.6,
-        ease: "power3.out",
-        delay: 0.4,
-      });
+      function animate() {
+        requestAnimationFrame(animate);
+        textMeshes.forEach((mesh, i) => {
+          mesh.rotation.y += 0.005;
+        });
+        renderer.render(scene, camera);
+      }
 
-      // Prepare YouTube icon
-      gsap.set(ytIconRef.current, { opacity: 0, scale: 0.8 });
+      animate();
     });
 
-    return () => ctx.revert();
+    window.addEventListener("resize", () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
   }, []);
 
-  const handleIconHover = (show) => {
-    gsap.to(ytIconRef.current, {
-      opacity: show ? 1 : 0,
-      scale: show ? 1 : 0.8,
-      ease: "power3.out",
-      duration: 0.3,
-    });
-  };
-
   return (
-    <>
-      <div className="flex justify-center items-center flex-col gap-[1.5rem] h-[100vh] relative overflow-hidden z-0">
-        {/* Music Player */}
-        <Link
-          to="https://www.youtube.com/watch?v=9pIP8fWEUzo"
-          className="flex gap-1 justify-center items-center w-fit relative z-10 cursor-hover"
-          onMouseEnter={() => handleIconHover(true)}
-          onMouseLeave={() => handleIconHover(false)}
-          ref={vibeRef}
-        >
-          <div className="w-7 h-7 mr-1 rounded-full overflow-hidden">
-            <img
-              src={thumbnailURL}
-              alt="Now Playing"
-              className="w-full h-full object-cover animate-spin-slow"
-            />
-          </div>
-          <p className="text-[0.75rem] text-black">bairiyaa</p>
-          <p className="text-[0.75rem] text-[#969696]">· current vibe</p>
-          <img
-            ref={ytIconRef}
-            src={ytIcon}
-            alt="YouTube"
-            className="w-4 absolute -right-6 opacity-0 pointer-events-none"
-          />
-        </Link>
-
-        {/* Hero Text */}
-        <h1
-          data-cursor-hide="true"
-          className="text-lg text-center w-full sm:w-[90vw] md:w-[70vw] lg:w-[50vw] leading-normal flex flex-wrap justify-center gap-x-1 z-10"
-        >
-          {words.map((word, i) => (
-            <span
-              key={i}
-              ref={(el) => (textRef.current[i] = el)}
-              className={`transition-colors duration-200 ${["supermom", "equations", "lo-fi", "chaos", "half-baked"].some((w) =>
-                word.toLowerCase().includes(w)
-              )
-                  ? "text-[#969696] hover:text-[#FF800A] cursor-pointer"
-                  : "text-black"
-                }`}
-            >
-              {word}
-            </span>
-
-
-          ))}
-        </h1>
-
+    <div className="relative w-full h-screen bg-black">
+      <canvas ref={canvasRef} className="absolute top-0 left-0 w-full h-full z-0" />
+      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-3xl font-bold font-bricolage text-center z-10">
+        Kalpana Bhatt<br />
+        <span className="text-base font-outfit">clarity through interface</span>
       </div>
-    </>
+    </div>
   );
-};
-
-export default Home;
+}
