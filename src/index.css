@@ -4,10 +4,11 @@
 
 
 body {
-  font-family: 'Lexend Deca', sans-serif;
   background-color: #F5F5F5;
+  font-family: "General Sans", sans-serif;
 }
 
 
-/* Hide the default system cursor */
-
+h1, h2, h3, h4 {
+  font-family: "Bricolage Grotesque", sans-serif;
+}
