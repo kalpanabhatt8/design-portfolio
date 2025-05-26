@@ -51,7 +51,7 @@ const Layout = () => {
     return (
         <div className="min-h-screen bg-hero-pattern bg-cover bg-center">
               <CustomCursor />
-            <Header/>
+            {/* <Header/> */}
             <Outlet />
         </div>
     )
