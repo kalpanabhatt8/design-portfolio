@@ -153,7 +153,7 @@ const Home = () => {
       {isLoading && (
         <div
           ref={loaderRef}
-          className="relative flex items-center justify-center h-screen w-full bg-[#0F1115] text-white font-bricolage overflow-hidden transition-all duration-500 ease-in-out"
+          className="relative flex items-center justify-center h-screen w-full bg-[#0a0d10] text-white font-bricolage overflow-hidden transition-all duration-500 ease-in-out"
         >
           <div className="absolute inset-0 z-0 pointer-events-none">
             {["const", "return", "{ }", "div", "<button>", "useState", "=>"].map((word, index) => (
