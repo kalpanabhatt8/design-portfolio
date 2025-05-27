@@ -13,9 +13,9 @@ const Home = () => {
   const floatingRefs = useRef([]);
   const dotRefs = useRef([]);
   const statusRef = useRef(null);
+  const blurRef = useRef(null);
 
   const loadingStatuses = ["debugging...", "hydrating code...", "calming dev anxiety..."];
-
   const sentence =
     "I’m Kalpana Bhatt — daughter of a supermom, shaped by equations, powered by lo-fi beats, now designing clarity out of chaos. I turn half-baked ideas into elegant, scalable interfaces that just make sense.";
   const words = sentence.split(" ");
@@ -67,6 +67,31 @@ const Home = () => {
       });
     }, 6000);
 
+    let mouseX = 0;
+    let mouseY = 0;
+
+    const handleMouseMove = (e) => {
+      const centerX = window.innerWidth / 2;
+      const centerY = window.innerHeight / 2;
+      mouseX = (e.clientX - centerX) * 0.15;
+      mouseY = (e.clientY - centerY) * 0.15;
+    };
+
+    const animateBlur = () => {
+      if (blurRef.current) {
+        gsap.to(blurRef.current, {
+          x: mouseX,
+          y: mouseY,
+          duration: 0.5,
+          ease: "power2.out",
+        });
+      }
+      requestAnimationFrame(animateBlur);
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    animateBlur();
+
     floatingRefs.current.forEach((el, i) => {
       if (!el) return;
       gsap.to(el, {
@@ -100,26 +125,26 @@ const Home = () => {
     });
 
     setTimeout(() => {
-  if (statusRef.current) {
-    statusRef.current.textContent = "(this might take longer if it’s Monday)";
-  }
-}, 0);
+      if (statusRef.current) {
+        statusRef.current.textContent = "(this might take longer if it’s Monday)";
+      }
+    }, 0);
 
-setTimeout(() => {
-  if (statusRef.current) {
-    const msg = loadingStatuses[Math.floor(Math.random() * loadingStatuses.length)];
-    statusRef.current.textContent = msg;
-    gsap.fromTo(
-      statusRef.current,
-      { opacity: 0 },
-      { opacity: 1, duration: 0.3, yoyo: true, repeat: 1, repeatDelay: 0.5 }
-    );
-  }
-}, 5000);
+    setTimeout(() => {
+      if (statusRef.current) {
+        const msg = loadingStatuses[Math.floor(Math.random() * loadingStatuses.length)];
+        statusRef.current.textContent = msg;
+        gsap.fromTo(
+          statusRef.current,
+          { opacity: 0 },
+          { opacity: 1, duration: 0.3, yoyo: true, repeat: 1, repeatDelay: 0.5 }
+        );
+      }
+    }, 5000);
 
     return () => {
       clearTimeout(timeout);
-      
+      window.removeEventListener("mousemove", handleMouseMove);
     };
   }, []);
 
@@ -135,7 +160,7 @@ setTimeout(() => {
               <span
                 key={index}
                 ref={(el) => (floatingRefs.current[index] = el)}
-                className="absolute text-sm text-[#3BAEFF] opacity-20"
+                className="absolute text-sm text-[#FF9D41] opacity-20"
                 style={{
                   top: `${Math.random() * 100}%`,
                   left: `${Math.random() * 100}%`,
@@ -146,24 +171,27 @@ setTimeout(() => {
             ))}
           </div>
 
-          <div className="absolute w-[600px] h-[600px] bg-gradient-to-tr from-[#3BAEFF] via-transparent to-[#0F1115] rounded-full opacity-20 animate-pulse blur-3xl z-0" />
+          <div
+            ref={blurRef}
+            className="transform absolute w-[600px] h-[600px] bg-gradient-to-tr from-[#FF800A] via-transparent to-[#1A1D23] rounded-full opacity-30 animate-pulse blur-3xl z-0"
+          />
 
           <div className="z-10 text-center">
             <div className="flex flex-row gap-3 justify-center items-center">
-              <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight mb-4">
+              <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight mb-4 text-white">
                 Loading
               </h1>
               <div className="flex justify-center gap-1 mb-2 items-center">
-                {[0, 1, 2].map((d, i) => (
+                {[0, 1, 2].map((_, i) => (
                   <span
                     key={i}
                     ref={(el) => (dotRefs.current[i] = el)}
-                    className="inline-block w-1.5 h-1.5 bg-white rounded-full"
+                    className="inline-block w-1.5 h-1.5 bg-[#E5E7EB] rounded-full"
                   ></span>
                 ))}
               </div>
             </div>
-            <p className="text-sm italic text-[#d0d0d0]" ref={statusRef}>
+            <p className="text-sm italic text-[#ffb774]" ref={statusRef}>
               (this might take longer if it’s Monday)
             </p>
           </div>
@@ -187,7 +215,7 @@ setTimeout(() => {
               />
             </div>
             <p className="text-[0.75rem] text-black">bairiyaa</p>
-            <p className="text-[0.75rem] text-[#969696]">· current vibe</p>
+            <p className="text-[0.75rem] text-[#A0A0A0]">· current vibe</p>
             <img
               ref={ytIconRef}
               src={ytIcon}
@@ -204,11 +232,12 @@ setTimeout(() => {
               <span
                 key={i}
                 ref={(el) => (textRef.current[i] = el)}
-                className={`transition-colors duration-200 ${["supermom", "equations", "lo-fi", "chaos", "half-baked"].some((w) =>
-                  word.toLowerCase().includes(w)
-                )
-                  ? "text-[#969696] hover:text-[#FF800A] cursor-pointer"
-                  : "text-black"
+                className={`transition-colors duration-200 ${
+                  ["supermom", "equations", "lo-fi", "chaos", "half-baked"].some((w) =>
+                    word.toLowerCase().includes(w)
+                  )
+                    ? "text-[#364156] hover:text-[#FF800A] cursor-pointer"
+                    : "text-black"
                 }`}
               >
                 {word}
