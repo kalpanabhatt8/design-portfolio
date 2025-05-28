@@ -3,7 +3,6 @@ import { useLayoutEffect, useRef, useState, useEffect } from "react";
 import gsap from "gsap";
 import thumbnailURL from "../assets/shreyaji.png";
 import ytIcon from "../assets/youtube-color-icon.svg";
-import { audioTheme } from "../utils/audioTheme";
 
 const Home = () => {
   const [isLoading, setIsLoading] = useState(true);
