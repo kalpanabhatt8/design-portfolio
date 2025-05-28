@@ -3,6 +3,7 @@ import { useLayoutEffect, useRef, useState, useEffect } from "react";
 import gsap from "gsap";
 import thumbnailURL from "../assets/shreyaji.png";
 import ytIcon from "../assets/youtube-color-icon.svg";
+import { audioTheme } from "../utils/audioTheme";
 
 const Home = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -10,6 +11,7 @@ const Home = () => {
   const vibeRef = useRef(null);
   const textRef = useRef([]);
   const loaderRef = useRef(null);
+  const loaderLineRef = useRef(null);
   const floatingRefs = useRef([]);
   const dotRefs = useRef([]);
   const statusRef = useRef(null);
@@ -60,12 +62,48 @@ const Home = () => {
   useEffect(() => {
     const timeout = setTimeout(() => {
       gsap.to(loaderRef.current, {
+        scale: 1.05,
         opacity: 0,
         duration: 0.6,
         ease: "power2.inOut",
-        onComplete: () => setIsLoading(false),
+        onStart: () => {
+          gsap.to(loaderRef.current, {
+            scale: 1,
+            duration: 0.1,
+            ease: "power2.inOut",
+          });
+          // Remove conflicting GSAP animation for loaderLineRef.current width.
+          // gsap.to(loaderLineRef.current, {
+          //   width: "100%",
+          //   duration: 0.6,
+          //   ease: "power2.inOut",
+          // });
+          gsap.to(loaderLineRef.current, {
+            opacity: 0,
+            duration: 0.5,
+            ease: "power2.inOut",
+            onComplete: () => {
+              loaderLineRef.current.style.display = "none";
+            }
+          });
+        },
+        onComplete: () => {
+          setIsLoading(false);
+        },
       });
     }, 6000);
+
+    // Progress bar: 0% to 80% fast, then 80% to 100% slow and subtle
+    const progressTimeline = gsap.timeline();
+    progressTimeline.to(loaderLineRef.current, {
+      width: "80%",
+      duration: 0.8,
+      ease: "power3.out"
+    }).to(loaderLineRef.current, {
+      width: "100%",
+      duration: 5.2,
+      ease: "power1.inOut"
+    }, "+=0");
 
     let mouseX = 0;
     let mouseY = 0;
@@ -98,6 +136,7 @@ const Home = () => {
         y: "+=10",
         x: "+=10",
         rotation: "+=5",
+        opacity: 0.1 + Math.random() * 0.1,
         duration: 3 + Math.random() * 2,
         ease: "sine.inOut",
         yoyo: true,
@@ -133,12 +172,28 @@ const Home = () => {
     setTimeout(() => {
       if (statusRef.current) {
         const msg = loadingStatuses[Math.floor(Math.random() * loadingStatuses.length)];
-        statusRef.current.textContent = msg;
-        gsap.fromTo(
-          statusRef.current,
-          { opacity: 0 },
-          { opacity: 1, duration: 0.3, yoyo: true, repeat: 1, repeatDelay: 0.5 }
-        );
+        gsap.to(statusRef.current, {
+          opacity: 0,
+          duration: 0.2,
+          onComplete: () => {
+            statusRef.current.textContent = msg;
+            gsap.to(statusRef.current, {
+              opacity: 1,
+              duration: 0.4,
+              ease: "power2.out",
+            });
+            gsap.fromTo(
+              statusRef.current,
+              { scale: 1.05, rotation: 1 },
+              {
+                scale: 1,
+                rotation: 0,
+                duration: 0.6,
+                ease: "back.out(1.7)",
+              }
+            );
+          },
+        });
       }
     }, 5000);
 
@@ -153,7 +208,7 @@ const Home = () => {
       {isLoading && (
         <div
           ref={loaderRef}
-          className="relative flex items-center justify-center h-screen w-full bg-[#0a0d10] text-white font-bricolage overflow-hidden transition-all duration-500 ease-in-out"
+          className="absolute inset-0 z-50 flex items-center justify-center h-screen w-full bg-[#0a0d10] text-white font-bricolage overflow-hidden transition-all duration-500 ease-in-out"
         >
           <div className="absolute inset-0 z-0 pointer-events-none">
             {["const", "return", "{ }", "div", "<button>", "useState", "=>"].map((word, index) => (
@@ -177,7 +232,7 @@ const Home = () => {
           />
 
           <div className="z-10 text-center">
-            <div className="flex flex-row gap-3 justify-center items-center">
+            <div className="flex flex-row gap-1 justify-center items-center">
               <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight mb-4 text-white">
                 Loading
               </h1>
@@ -195,11 +250,25 @@ const Home = () => {
               (this might take longer if it’s Monday)
             </p>
           </div>
+          <div className="absolute bottom-[80px] flex justify-center w-full z-50 ">
+            <div className="w-[120px] h-1.5 rounded-full overflow-hidden bg-[#1A1D23] border border-[#FF9D41]/50 shadow-inner shadow-[#FF800A]/20">
+              <div
+                ref={loaderLineRef}
+                className="h-full rounded-full"
+                style={{
+                  width: "0%",
+                  background: "linear-gradient(to right, #FF800A, #FFB347)",
+                  boxShadow: "0 0 12px #FF800A",
+                  transition: "width 0.6s ease-in-out",
+                }}
+              />
+            </div>
+          </div>
         </div>
       )}
 
       {!isLoading && (
-        <div className="flex justify-center items-center flex-col gap-[1.5rem] h-[100vh] relative overflow-hidden z-0 bg-white">
+        <div className="flex justify-center items-center flex-col gap-[1.5rem] h-[100vh] relative overflow-hidden z-0 bg-hero-pattern">
           <Link
             to="https://www.youtube.com/watch?v=9pIP8fWEUzo"
             className="flex gap-1 justify-center items-center w-fit relative z-10 cursor-hover"
