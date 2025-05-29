@@ -1,7 +1,7 @@
 import gsap from 'gsap';
 import React, { useEffect } from 'react';
 
-const LoadingScreen = ({
+const LightLoader = ({
   isLoading,
   setIsLoading,
   loaderRef,
@@ -45,15 +45,7 @@ const LoadingScreen = ({
       }, "+=0");
 
       setTimeout(() => {
-        if (loaderRef.current) {
-          gsap.to(loaderRef.current, {
-            opacity: 0,
-            duration: 0.5,
-            onComplete: () => setIsLoading(false)
-          });
-        } else {
-          setIsLoading(false);
-        }
+        setIsLoading(false);
       }, 6000);
 
       setTimeout(() => {
@@ -90,14 +82,14 @@ const LoadingScreen = ({
   return (
     <div
       ref={loaderRef}
-      className="absolute inset-0 z-50 flex items-center justify-center h-screen w-full bg-[#0a0d10] text-white font-bricolage overflow-hidden transition-all duration-500 ease-in-out"
+      className="absolute inset-0 z-50 flex items-center justify-center h-screen w-full bg-white font-bricolage overflow-hidden transition-all duration-500 ease-in-out"
     >
       <div className="absolute inset-0 z-0 pointer-events-none">
         {["const", "return", "{ }", "div", "<button>", "useState", "=>"].map((word, index) => (
           <span
             key={index}
             ref={(el) => (floatingRefs.current[index] = el)}
-            className="absolute text-sm text-[#FF9D41] opacity-20"
+            className="absolute text-[15px] font-normal text-[#e68a00] opacity-60 animate-float"
             style={{
               top: `${Math.random() * 100}%`,
               left: `${Math.random() * 100}%`,
@@ -110,12 +102,13 @@ const LoadingScreen = ({
 
       <div
         ref={blurRef}
-        className="transform absolute w-[600px] h-[600px] bg-gradient-to-tr from-[#FF800A] via-transparent to-[#1A1D23] rounded-full opacity-30 animate-pulse blur-3xl z-0"
+        className="transform absolute w-[500px] h-[250px] bg-[conic-gradient(from_180deg,_#ffb347_0deg,_#fff4e6_120deg,_transparent_180deg)] rounded-t-full opacity-80 animate-pulse blur-[100px] z-0 left-[27%] top-[35%]"
       />
+      <div className="absolute w-[400px] h-[400px] bg-[radial-gradient(circle,_#fff0e0_0%,_transparent_80%)] opacity-40 blur-[120px] z-0 left-[50%] top-[55%] -translate-x-1/2" />
 
       <div className="z-10 text-center">
         <div className="flex flex-row gap-1 justify-center items-center">
-          <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight mb-4 text-white">
+          <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight mb-4 text-black drop-shadow-md">
             Loading
           </h1>
           <div className="flex justify-center gap-1 mb-2 items-center">
@@ -123,17 +116,17 @@ const LoadingScreen = ({
               <span
                 key={i}
                 ref={(el) => (dotRefs.current[i] = el)}
-                className="inline-block w-1.5 h-1.5 bg-[#E5E7EB] rounded-full"
+                className="inline-block w-1.5 h-1.5 bg-black rounded-full drop-shadow-md border-none"
               ></span>
             ))}
           </div>
         </div>
-        <p className="text-sm italic text-[#ffb774]" ref={statusRef}>
+        <p className="text-sm italic text-[#ff8c33]" ref={statusRef}>
           (this might take longer if it’s Monday)
         </p>
       </div>
       <div className="absolute bottom-[80px] flex justify-center w-full z-50 ">
-        <div className="w-[120px] h-1.5 rounded-full overflow-hidden bg-[#1A1D23] border border-[#FF9D41]/50 shadow-inner shadow-[#FF800A]/20">
+        <div className="w-[120px] h-1.5 rounded-full overflow-hidden bg-[#e6e6e6] border shadow-inner shadow-[#ffffff]/70">
           <div
             ref={loaderLineRef}
             className="h-full rounded-full"
@@ -150,4 +143,4 @@ const LoadingScreen = ({
   );
 };
 
-export default LoadingScreen;
+export default LightLoader;

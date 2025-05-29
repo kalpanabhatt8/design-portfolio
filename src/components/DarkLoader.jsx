@@ -45,15 +45,7 @@ const LoadingScreen = ({
       }, "+=0");
 
       setTimeout(() => {
-        if (loaderRef.current) {
-          gsap.to(loaderRef.current, {
-            opacity: 0,
-            duration: 0.5,
-            onComplete: () => setIsLoading(false)
-          });
-        } else {
-          setIsLoading(false);
-        }
+        setIsLoading(false);
       }, 6000);
 
       setTimeout(() => {
