@@ -5,7 +5,7 @@
 
 
 body {
-  font-family: "General Sans", sans-serif;
+  font-family: "Lexend Deca", sans-serif;
 }
 
 .custom-cursor {
@@ -16,28 +16,12 @@ body {
   box-shadow: 0 0 4px #ff9d41;
 }
 
-@keyframes fade-in {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-.animate-fade-in {
-  animation: fade-in 0.8s ease-out both;
-}
-
 h1, h2, h3, h4 {
   font-family: "Bricolage Grotesque", sans-serif;
 }
 
 
 /* Hide the default system cursor */
-
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-4px); }
-}
-.animate-float {
-  animation: float 4s ease-in-out infinite;
-}
 
 .cursor-dot {
   background-color: #FF800A;

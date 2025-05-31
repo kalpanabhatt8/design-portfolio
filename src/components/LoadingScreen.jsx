@@ -46,11 +46,22 @@ const LoadingScreen = ({
 
       setTimeout(() => {
         if (loaderRef.current) {
-          gsap.to(loaderRef.current, {
-            opacity: 0,
-            duration: 0.5,
+          const exitTimeline = gsap.timeline({
             onComplete: () => setIsLoading(false)
           });
+
+          exitTimeline
+            .to(loaderRef.current, {
+              scale: 1.05,
+              duration: 0.3,
+              ease: "power1.out"
+            })
+            .to(loaderRef.current, {
+              scale: 1.2,
+              opacity: 0,
+              duration: 0.6,
+              ease: "power2.inOut"
+            });
         } else {
           setIsLoading(false);
         }
