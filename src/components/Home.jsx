@@ -7,6 +7,7 @@ import LoadingScreen from "./LoadingScreen";
 
 const Home = () => {
   const [isLoading, setIsLoading] = useState(true);
+  const [showLoader, setShowLoader] = useState(true);
   const ytIconRef = useRef(null);
   const vibeRef = useRef(null);
   const textRef = useRef([]);
@@ -61,36 +62,29 @@ const Home = () => {
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      gsap.to(loaderRef.current, {
-        scale: 1.05,
-        opacity: 0,
-        duration: 0.6,
-        ease: "power2.inOut",
-        onStart: () => {
-          gsap.to(loaderRef.current, {
-            scale: 1,
-            duration: 0.1,
-            ease: "power2.inOut",
-          });
-          // Remove conflicting GSAP animation for loaderLineRef.current width.
-          // gsap.to(loaderLineRef.current, {
-          //   width: "100%",
-          //   duration: 0.6,
-          //   ease: "power2.inOut",
-          // });
-          gsap.to(loaderLineRef.current, {
+      if (loaderRef.current) {
+        const exitTimeline = gsap.timeline();
+        exitTimeline
+          .to(loaderRef.current, {
+            scale: 1.05,
+            duration: 0.3,
+            ease: "power1.out"
+          })
+          .to(loaderRef.current, {
+            scale: 1.2,
             opacity: 0,
-            duration: 0.5,
-            ease: "power2.inOut",
-            onComplete: () => {
-              loaderLineRef.current.style.display = "none";
-            }
+            duration: 0.6,
+            ease: "power2.inOut"
           });
-        },
-        onComplete: () => {
+
+        exitTimeline.eventCallback("onComplete", () => {
           setIsLoading(false);
-        },
-      });
+          setTimeout(() => setShowLoader(false), 600);
+        });
+      } else {
+        setIsLoading(false);
+        setShowLoader(false);
+      }
     }, 6000);
 
     // Progress bar: 0% to 80% fast, then 80% to 100% slow and subtle
@@ -205,7 +199,7 @@ const Home = () => {
 
   return (
     <>
-      {isLoading && (
+      {showLoader && (
         <LoadingScreen
           isLoading={isLoading}
           setIsLoading={setIsLoading}
