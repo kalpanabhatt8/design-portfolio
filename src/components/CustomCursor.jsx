@@ -47,6 +47,23 @@ const CustomCursor = () => {
 
       const shouldHide = e.target.closest("[data-cursor-hide='true']");
       cursor.style.display = shouldHide ? "none" : "block";
+
+      const darkSection = e.target.closest("[data-cursor-dark='true']");
+      if (darkSection) {
+        cursor.style.backgroundColor = "#ffffff";
+        cursor.style.boxShadow = "0 0 6px #ffffff";
+      } else {
+        cursor.style.backgroundColor = "#FF800A";
+        cursor.style.boxShadow = "0 0 6px #FF800A";
+      }
+
+      const magnetTarget = e.target.closest("button, a");
+      if (magnetTarget) {
+        const rect = magnetTarget.getBoundingClientRect();
+        const offsetX = (e.clientX - (rect.left + rect.width / 2)) * 0.3;
+        const offsetY = (e.clientY - (rect.top + rect.height / 2)) * 0.3;
+        gsap.to(magnetTarget, { x: offsetX, y: offsetY, duration: 0.3, ease: "power3.out" });
+      }
     };
 
     const handleBurst = () => {

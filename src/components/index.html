@@ -1,4 +1,20 @@
-import { Link } from "react-router-dom";
+<p className="text-lg font-normal w-full sm:w-[90vw] md:w-[60vw] lg:w-[45vw] leading-relaxed text-gray-300 flex flex-wrap gap-x-1">
+    {[
+        "—", "daughter", "of", "a", "supermom,", 
+        "shaped", "by", "equations,", 
+        "powered", "by", "lo-fi", "beats,", 
+        "now", "designing", "clarity", "into", "chaos.",
+        "I", "turn", "half-baked", "ideas", "into", "elegant,", 
+        "scalable", "interfaces", "that", "just", "make", "sense."
+      ].map((word, i) => (
+        <span key={i} ref={(el) => (textRef.current[5 + i] = el)} className="inline-block">
+          {word}
+        </span>
+      ))}
+  </p>
+
+
+  import { Link } from "react-router-dom";
 import { useLayoutEffect, useRef, useState, useEffect } from "react";
 import gsap from "gsap";
 import thumbnailURL from "../assets/shreyaji.png";
@@ -86,29 +102,47 @@ const Home = () => {
     if (isLoading) return;
 
     const ctx = gsap.context(() => {
-      gsap.from(textRef.current[0], {
+      gsap.from([...textRef.current.slice(0, 5)], {
         opacity: 0,
-        y: 40,
+        y: 30,
+        stagger: 0.15,
         duration: 1,
-        ease: "power4.out",
-        delay: 0.3,
+        ease: "power3.out",
       });
 
-      gsap.from(textRef.current[1], {
+      gsap.from(textRef.current[5], {
         opacity: 0,
-        y: 40,
+        y: 30,
+        delay: 1.2,
         duration: 1,
-        ease: "power4.out",
-        delay: 1.0,
+        ease: "power3.out",
       });
 
-      gsap.from(textRef.current[2], {
+      gsap.set(textRef.current, { opacity: 0, y: 20 });
+
+      gsap.set(ytIconRef.current, { opacity: 0, scale: 0.8 });
+
+      gsap.from(".marquee-wrapper", {
         opacity: 0,
-        y: 40,
-        duration: 1,
-        ease: "power4.out",
-        delay: 1.7,
+        y: 20,
+        delay: 2.5,
+        duration: 0.8,
+        ease: "power3.out",
       });
+
+      const heroSection = document.querySelector(".hero-section");
+      const parallax = (e) => {
+        const { innerWidth, innerHeight } = window;
+        const moveX = ((e.clientX / innerWidth) - 0.5) * 8;
+        const moveY = ((e.clientY / innerHeight) - 0.5) * 4;
+        gsap.to(heroSection, { x: moveX, y: moveY, duration: 0.5, ease: "power3.out" });
+      };
+      window.addEventListener("mousemove", parallax);
+
+      return () => {
+        ctx.revert();
+        window.removeEventListener("mousemove", parallax);
+      };
     });
 
     return () => ctx.revert();
@@ -285,22 +319,21 @@ const Home = () => {
       {!isLoading && (
         <div className="hero-section relative w-full h-screen flex flex-col justify-center px-6 md:px-24 lg:px-40 bg-[#2F2F2F]">
           <div className="relative z-10 max-w-5xl">
-            <p ref={(el) => (textRef.current[0] = el)} className="text-white text-lg mb-4">
-              Hi! I am <span className="text-gray-400">Kalpana Bhatt</span>
-            </p>
+            <p className="text-white text-lg mb-4">Hi! I am <span className="text-gray-400">Kalpana Bhatt</span></p>
 
-            <h1 ref={(el) => (textRef.current[1] = el)} className="text-white text-[2.75rem] md:text-[4rem] lg:text-[5.65rem] font-extrabold leading-[1.1] mb-8">
-              Product Design &<br className="hidden md:block" />Frontend Engineer
+            <h1 className="text-white text-[2.75rem] md:text-[4rem] lg:text-[5.65rem] font-extrabold leading-[1.1] mb-8">
+              {["Product", "Design", "&", "Frontend", "Engineer"].map((word, i) => (
+                <span key={i} ref={(el) => (textRef.current[i] = el)} className="inline-block mr-2">
+                  {word}
+                </span>
+              ))}
             </h1>
 
-            <p ref={(el) => (textRef.current[2] = el)} className="text-lg font-normal w-full sm:w-[90vw] md:w-[60vw] lg:w-[45vw] leading-relaxed text-gray-300">
-            — daughter of a <span className="text-gray-400 hover:text-[#FF800A] cursor-pointer">supermom</span>, 
-              shaped by <span className="text-gray-400 hover:text-[#FF800A] cursor-pointer">equations</span>, 
-              powered by <span className="text-gray-400 hover:text-[#FF800A] cursor-pointer">lo-fi beats</span>, 
-              now designing clarity into <span className="text-gray-400 hover:text-[#FF800A] cursor-pointer">chaos</span>. 
-              I turn <span className="text-gray-400 hover:text-[#FF800A] cursor-pointer">half-baked</span> ideas into elegant, scalable interfaces that just make sense.
+            <p className="text-lg font-normal w-full sm:w-[90vw] md:w-[60vw] lg:w-[45vw] leading-relaxed text-gray-300">
+            
             </p>
           </div>
+          
         </div>
       )}
     </>
