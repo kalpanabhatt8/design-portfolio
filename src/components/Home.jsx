@@ -88,26 +88,26 @@ const Home = () => {
     const ctx = gsap.context(() => {
       gsap.from(textRef.current[0], {
         opacity: 0,
-        y: 40,
-        duration: 1,
+        y: 30,
+        duration: 0.6,
         ease: "power4.out",
         delay: 0.3,
       });
 
       gsap.from(textRef.current[1], {
         opacity: 0,
-        y: 40,
-        duration: 1,
+        y: 30,
+        duration: 0.6,
         ease: "power4.out",
-        delay: 1.0,
+        delay: 0.7,
       });
 
       gsap.from(textRef.current[2], {
         opacity: 0,
-        y: 40,
-        duration: 1,
+        y: 30,
+        duration: 0.6,
         ease: "power4.out",
-        delay: 1.7,
+        delay: 1.1,
       });
     });
 
