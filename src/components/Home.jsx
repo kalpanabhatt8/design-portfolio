@@ -1,9 +1,12 @@
 import { Link } from "react-router-dom";
 import { useLayoutEffect, useRef, useState, useEffect } from "react";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import thumbnailURL from "../assets/shreyaji.png";
 import ytIcon from "../assets/youtube-color-icon.svg";
 import LoadingScreen from "./LoadingScreen";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const Home = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -16,6 +19,11 @@ const Home = () => {
   const dotRefs = useRef([]);
   const statusRef = useRef(null);
   const blurRef = useRef(null);
+
+  const heroContainerRef = useRef(null);
+  const workSectionRef = useRef(null);
+  const scrollContainerRef = useRef(null);
+  let heroRef = null;
 
   useEffect(() => {
     const cursor = document.createElement("div");
@@ -102,12 +110,57 @@ const Home = () => {
         delay: 0.7,
       });
 
-      gsap.from(textRef.current[2], {
+      gsap.from(".prototype-card", {
         opacity: 0,
-        y: 30,
-        duration: 0.6,
+        y: 20,
+        duration: 1,
         ease: "power4.out",
-        delay: 1.1,
+        delay: 1.8,
+      });
+
+      gsap.to(heroRef, {
+        scale: 1.01,
+        duration: 12,
+        ease: "sine.inOut",
+        yoyo: true,
+        repeat: -1,
+      });
+
+      gsap.to(heroContainerRef.current, {
+        opacity: 0,
+        y: -50,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: heroContainerRef.current,
+          start: "top top",
+          end: "bottom top",
+          scrub: true,
+          scroller: scrollContainerRef.current,
+        }
+      });
+
+      gsap.to(heroContainerRef.current, {
+        opacity: 0,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: heroContainerRef.current,
+          start: "top top",
+          end: "center top",
+          scrub: true,
+          scroller: scrollContainerRef.current,
+        }
+      });
+
+      gsap.from(workSectionRef.current, {
+        opacity: 0,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: workSectionRef.current,
+          start: "top bottom",
+          end: "center center",
+          scrub: true,
+          scroller: scrollContainerRef.current,
+        }
       });
     });
 
@@ -283,23 +336,29 @@ const Home = () => {
       )}
 
       {!isLoading && (
-        <div className="hero-section relative w-full h-screen flex flex-col justify-center px-6 md:px-24 lg:px-40 bg-[#2F2F2F]">
-          <div className="relative z-10 max-w-5xl">
-            <p ref={(el) => (textRef.current[0] = el)} className="text-white text-lg mb-4">
-              Hi! I am <span className="text-gray-400">Kalpana Bhatt</span>
-            </p>
-
-            <h1 ref={(el) => (textRef.current[1] = el)} className="text-white text-[2.75rem] md:text-[4rem] lg:text-[5.65rem] font-extrabold leading-[1.1] mb-8">
-              Product Design &<br className="hidden md:block" />Frontend Engineer
-            </h1>
-
-            <p ref={(el) => (textRef.current[2] = el)} className="text-lg font-normal w-full sm:w-[90vw] md:w-[60vw] lg:w-[45vw] leading-relaxed text-gray-300">
-            — daughter of a <span className="text-gray-400 hover:text-[#FF800A] cursor-pointer">supermom</span>, 
-              shaped by <span className="text-gray-400 hover:text-[#FF800A] cursor-pointer">equations</span>, 
-              powered by <span className="text-gray-400 hover:text-[#FF800A] cursor-pointer">lo-fi beats</span>, 
-              now designing clarity into <span className="text-gray-400 hover:text-[#FF800A] cursor-pointer">chaos</span>. 
-              I turn <span className="text-gray-400 hover:text-[#FF800A] cursor-pointer">half-baked</span> ideas into elegant, scalable interfaces that just make sense.
-            </p>
+        <div ref={scrollContainerRef} className="w-full h-screen overflow-y-scroll snap-y snap-mandatory scroll-smooth">
+          <div ref={heroContainerRef} className="relative w-full h-screen flex flex-col justify-center px-6 md:px-24 lg:px-40 snap-start">
+            <div className="absolute inset-0 z-0 pointer-events-none flex items-start justify-end">
+              <div className="w-[500px] h-[500px] rounded-full bg-gradient-to-br from-[#FF800A]/20 via-[#FF800A]/10 to-transparent blur-3xl"></div>
+            </div>
+            <div className="relative z-10 max-w-5xl">
+              <p className="text-md mb-2  text-gray-300">
+                Hi! I am <span className="text-gray-400 hover:text-[#FF800A] cursor-pointer uppercase">Kalpana Bhatt</span>
+              </p>
+              <h1 ref={(el) => (textRef.current[0] = el)} className="text-[#ededed] text-[2.75rem] md:text-[4rem] lg:text-[5.65rem] font-extrabold leading-[1.1] mb-8">
+                Product Designer & Frontend Engineer
+              </h1>
+              <p ref={(el) => (textRef.current[1] = el)} className="text-md font-normal w-full sm:w-[90vw] md:w-[60vw] lg:w-[45vw] leading-relaxed text-gray-300">
+                — daughter of a <span className="text-gray-400 hover:text-[#FF800A] cursor-pointer">supermom</span>, 
+                shaped by <span className="text-gray-400 hover:text-[#FF800A] cursor-pointer">equations</span>, 
+                powered by <span className="text-gray-400 hover:text-[#FF800A] cursor-pointer">lo-fi beats</span>, 
+                now designing clarity into <span className="text-gray-400 hover:text-[#FF800A] cursor-pointer">chaos</span>. 
+                I turn <span className="text-gray-400 hover:text-[#FF800A] cursor-pointer">half-baked</span> ideas into elegant, scalable interfaces that just make sense.
+              </p>
+            </div>
+          </div>
+          <div ref={workSectionRef} id="work-section" className="h-screen flex items-center justify-center snap-start">
+            <h2 className="text-white text-4xl">Case Studies Coming Soon...</h2>
           </div>
         </div>
       )}

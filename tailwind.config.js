@@ -10,7 +10,7 @@ module.exports = {
         'spin-slow': 'spin 4s linear infinite'
       },
       backgroundImage: {
-        'hero-pattern': "url('/Textures/sandpaper.png')",
+        'hero-pattern': "url('/Textures/grid-texture.png')",
       },
       fontFamily: {
         heading: ['"Bricolage Grotesque"', 'sans-serif'],
