@@ -26,62 +26,75 @@ const Home = () => {
   let heroRef = null;
 
   useEffect(() => {
-    const cursor = document.createElement("div");
-    cursor.classList.add("cursor-dot");
-    document.body.appendChild(cursor);
+    const cursor = document.getElementById("custom-cursor");
 
     const moveCursor = (e) => {
       gsap.to(cursor, {
         x: e.clientX,
         y: e.clientY,
-        duration: 0.3,
+        duration: 0.15,
         ease: "power3.out"
+      });
+    };
+
+    const moveBlob = (e) => {
+      const { innerWidth, innerHeight } = window;
+      const offsetX = (e.clientX - innerWidth / 2) / 20;
+      const offsetY = (e.clientY - innerHeight / 2) / 20;
+
+      gsap.to(vibeRef.current, {
+        x: offsetX,
+        y: offsetY,
+        duration: 1.2,
+        ease: "power4.out"
       });
     };
 
     window.addEventListener("mousemove", moveCursor);
+    window.addEventListener("mousemove", moveBlob);
 
-    const handleHover = () => {
-      cursor.style.transform = "scale(3)";
-      cursor.style.borderRadius = "20%";
-    };
-    const handleLeave = () => {
-      cursor.style.transform = "scale(1)";
-      cursor.style.borderRadius = "50%";
-    };
+    // Morph on hover zones:
+    document.querySelectorAll(".cta-button").forEach((el) => {
+      el.addEventListener("mouseenter", () => {
+        cursor.style.transform = "scale(2)";
+      });
+      el.addEventListener("mouseleave", () => {
+        cursor.style.transform = "scale(1)";
+      });
+    });
 
-    const magnetEffect = (e) => {
-      const rect = e.target.getBoundingClientRect();
-      const offsetX = e.clientX - (rect.left + rect.width / 2);
-      const offsetY = e.clientY - (rect.top + rect.height / 2);
-      gsap.to(e.target, {
-        x: offsetX * 0.2,
-        y: offsetY * 0.2,
-        duration: 0.3,
-        ease: "power3.out"
+    const parallaxHandler = (e) => {
+      const { innerWidth, innerHeight } = window;
+      const x = (e.clientX - innerWidth / 2) / 50;
+      const y = (e.clientY - innerHeight / 2) / 50;
+
+      // Move heroContainer slightly
+      gsap.to(heroContainerRef.current, {
+        x,
+        y,
+        duration: 0.6,
+        ease: "power3.out",
+      });
+
+      // Move orb glow slightly stronger for depth
+      gsap.to(vibeRef.current, {
+        x: x * 2,
+        y: y * 2,
+        duration: 0.6,
+        ease: "power3.out",
       });
     };
 
-    const magnetReset = (e) => {
-      gsap.to(e.target, { x: 0, y: 0, duration: 0.3, ease: "power3.out" });
-    };
-
-    document.querySelectorAll(".cta-button").forEach((el) => {
-      el.addEventListener("mouseenter", handleHover);
-      el.addEventListener("mouseleave", handleLeave);
-      el.addEventListener("mousemove", magnetEffect);
-      el.addEventListener("mouseout", magnetReset);
-    });
+    window.addEventListener("mousemove", parallaxHandler);
 
     return () => {
       window.removeEventListener("mousemove", moveCursor);
-      document.body.removeChild(cursor);
+      window.removeEventListener("mousemove", moveBlob);
       document.querySelectorAll(".cta-button").forEach((el) => {
-        el.removeEventListener("mouseenter", handleHover);
-        el.removeEventListener("mouseleave", handleLeave);
-        el.removeEventListener("mousemove", magnetEffect);
-        el.removeEventListener("mouseout", magnetReset);
+        el.removeEventListener("mouseenter", () => {});
+        el.removeEventListener("mouseleave", () => {});
       });
+      window.removeEventListener("mousemove", parallaxHandler);
     };
   }, []);
 
@@ -110,6 +123,14 @@ const Home = () => {
         delay: 0.7,
       });
 
+      gsap.from(textRef.current[2], {
+        opacity: 0,
+        y: 30,
+        duration: 0.6,
+        ease: "power4.out",
+        delay: 0.9,
+      });
+
       gsap.from(".prototype-card", {
         opacity: 0,
         y: 20,
@@ -129,6 +150,18 @@ const Home = () => {
       gsap.to(heroContainerRef.current, {
         opacity: 0,
         y: -50,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: heroContainerRef.current,
+          start: "top top",
+          end: "bottom top",
+          scrub: true,
+          scroller: scrollContainerRef.current,
+        }
+      });
+
+      gsap.to(vibeRef.current, {
+        opacity: 0,
         ease: "power2.out",
         scrollTrigger: {
           trigger: heroContainerRef.current,
@@ -161,6 +194,14 @@ const Home = () => {
           scrub: true,
           scroller: scrollContainerRef.current,
         }
+      });
+
+      gsap.to(vibeRef.current, {
+        y: "+=20",
+        duration: 5,
+        ease: "sine.inOut",
+        yoyo: true,
+        repeat: -1,
       });
     });
 
@@ -322,6 +363,19 @@ const Home = () => {
 
   return (
     <>
+      <div id="custom-cursor" style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        width: "16px",
+        height: "16px",
+        borderRadius: "50%",
+        backgroundColor: "#FF800A",
+        pointerEvents: "none",
+        zIndex: 9999,
+        transition: "transform 0.15s ease, width 0.3s ease, height 0.3s ease",
+      }}></div>
+
       {isLoading && (
         <LoadingScreen
           isLoading={isLoading}
@@ -338,9 +392,8 @@ const Home = () => {
       {!isLoading && (
         <div ref={scrollContainerRef} className="w-full h-screen overflow-y-scroll snap-y snap-mandatory scroll-smooth">
           <div ref={heroContainerRef} className="relative w-full h-screen flex flex-col justify-center px-6 md:px-24 lg:px-40 snap-start">
-            <div className="absolute inset-0 z-0 pointer-events-none flex items-start justify-end">
-              <div className="w-[500px] h-[500px] rounded-full bg-gradient-to-br from-[#FF800A]/20 via-[#FF800A]/10 to-transparent blur-3xl"></div>
-            </div>
+          <div ref={vibeRef} className="absolute top-[60%] right-[5%] w-[400px] h-[400px] rounded-full bg-[#FF800A] opacity-40 blur-[120px] z-0"></div>
+
             <div className="relative z-10 max-w-5xl">
               <p className="text-md mb-2  text-gray-300">
                 Hi! I am <span className="text-gray-400 hover:text-[#FF800A] cursor-pointer uppercase">Kalpana Bhatt</span>
@@ -355,6 +408,11 @@ const Home = () => {
                 now designing clarity into <span className="text-gray-400 hover:text-[#FF800A] cursor-pointer">chaos</span>. 
                 I turn <span className="text-gray-400 hover:text-[#FF800A] cursor-pointer">half-baked</span> ideas into elegant, scalable interfaces that just make sense.
               </p>
+
+              <div ref={(el) => (textRef.current[2] = el)} className="mt-12 text-sm text-gray-400">
+              🚧 Upcoming: Spotify Clone, E-commerce Dashboard, AI Chatbot
+            </div>
+
             </div>
           </div>
           <div ref={workSectionRef} id="work-section" className="h-screen flex items-center justify-center snap-start">
