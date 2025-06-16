@@ -23,7 +23,7 @@ body::before {
   z-index: -1;
   background-image: url("/textures/grid-texture.png");
   background-repeat: repeat;
-  opacity: 0.5; /* <-- safe opacity control */
+  opacity: 0.7; /* <-- safe opacity control */
 }
 
 .custom-cursor {

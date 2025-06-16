@@ -63,30 +63,6 @@ const Home = () => {
       });
     });
 
-    const parallaxHandler = (e) => {
-      const { innerWidth, innerHeight } = window;
-      const x = (e.clientX - innerWidth / 2) / 50;
-      const y = (e.clientY - innerHeight / 2) / 50;
-
-      // Move heroContainer slightly
-      gsap.to(heroContainerRef.current, {
-        x,
-        y,
-        duration: 0.6,
-        ease: "power3.out",
-      });
-
-      // Move orb glow slightly stronger for depth
-      gsap.to(vibeRef.current, {
-        x: x * 2,
-        y: y * 2,
-        duration: 0.6,
-        ease: "power3.out",
-      });
-    };
-
-    window.addEventListener("mousemove", parallaxHandler);
-
     return () => {
       window.removeEventListener("mousemove", moveCursor);
       window.removeEventListener("mousemove", moveBlob);
@@ -94,7 +70,6 @@ const Home = () => {
         el.removeEventListener("mouseenter", () => {});
         el.removeEventListener("mouseleave", () => {});
       });
-      window.removeEventListener("mousemove", parallaxHandler);
     };
   }, []);
 
