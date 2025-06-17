@@ -18,7 +18,8 @@ const CustomCursor = () => {
     trailRefs.current = Array.from({ length: trailCount }, (_, i) => trailRefs.current[i] || document.createElement("div"));
 
     trailRefs.current.forEach((el) => {
-      el.className = "fixed top-0 left-0 w-3 h-3 bg-[#FF800A] rounded-full pointer-events-none z-[9998] opacity-30";
+      el.className = "fixed top-0 left-0 pointer-events-none z-[9998] text-[#FF800A] text-sm text-xl";
+      el.textContent = "✦";
       document.body.appendChild(el);
     });
 
@@ -110,10 +111,10 @@ const CustomCursor = () => {
         ref={cursorRef}
         className="fixed top-0 left-0 z-[9999] pointer-events-none flex items-center justify-center text-[10px] text-white font-semibold"
         style={{
-          width: "14px",
-          height: "14px",
+          width: "0px",
+          height: "0px",
           borderRadius: "50%",
-          backgroundColor: "#FF800A",
+          backgroundColor: "transparent",
           transition: "background-color 0.3s ease",
           pointerEvents: "none",
           display: "block",

@@ -338,18 +338,28 @@ const Home = () => {
 
   return (
     <>
-      <div id="custom-cursor" style={{
-        position: "fixed",
-        top: 0,
-        left: 0,
-        width: "16px",
-        height: "16px",
-        borderRadius: "50%",
-        backgroundColor: "#FF800A",
-        pointerEvents: "none",
-        zIndex: 9999,
-        transition: "transform 0.15s ease, width 0.3s ease, height 0.3s ease",
-      }}></div>
+
+<div
+      id="custom-cursor"
+      className="top-0 left-0 z-[999999] pointer-events-none bg-transparent custom-cursor"
+      style={{
+        width: "28px",
+        height: "28px",
+        transform: "translate(-50%, -50%)",
+        position: "fixed"
+      }}
+    >
+      <img
+        src="/textures/sparkle-cursor.svg"
+        alt="cursor"
+        style={{
+          width: "100%",
+          height: "100%",
+          objectFit: "contain",
+        }}
+      />
+    </div>
+    
 
       {isLoading && (
         <LoadingScreen
