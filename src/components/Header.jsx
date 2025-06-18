@@ -54,9 +54,9 @@ const Header = () => {
 
   return (
     <>
-      <div className={`flex items-center z-20 ${theme === 'light' ? 'text-light-primary' : 'text-dark-primary'}`}>
+      <div className={`w-[100%] flex justify-center items-center absolute z-20 ${theme === 'light' ? 'text-white' : 'text-black'}`}>
         <div className='container'>
-          <nav className="flex justify-between py-5">
+          <nav className="flex justify-between py-5 px-8">
             <div
               className="flex flex-col"
               data-cursor-hide="true"
@@ -71,15 +71,15 @@ const Header = () => {
                   lineHeight: '1.1',
                   marginBottom:"0px",
                   letterSpacing: '0.5px',
-                  
+                  zIndex: 567
                 }}
               >
                 Kalpana Bhatt
               </h1>
               <span
-                className={`text-xs italic transition-opacity duration-700 font-normal ${
+                className={`text-xs text-[#8a8a8a] italic transition-opacity duration-700 font-normal ${
                   fadeIn ? 'opacity-100' : 'opacity-0'
-                } ${theme === 'light' ? 'text-light-secondary' : 'text-dark-secondary'}`}
+                }`}
               >
                 {wittyLines[lineIndex]}
               </span>
@@ -91,8 +91,8 @@ const Header = () => {
               <li data-cursor-burst><NavLink to="/">About</NavLink></li>
               <li data-cursor-burst><NavLink to="/">Resume</NavLink></li>
               <li data-cursor-burst>
-                <button onClick={toggleTheme} className={`focus:outline-none border-[1px] p-2 rounded-lg theme-toggle ${theme === 'light' ? 'border-light-secondary' : 'border-dark-secondary'}`}>
-                  <img src={theme === 'light' ? lightIcon : darkIcon} alt="Toggle Theme" className="w-4 " />
+                <button onClick={toggleTheme} className="focus:outline-none border-[1px] border-[#b6b6b6] p-2 rounded-lg theme-toggle">
+                  <img src={theme === 'light' ? darkIcon : lightIcon} alt="Toggle Theme" className="w-4 " />
                 </button>
               </li>
             </ul>

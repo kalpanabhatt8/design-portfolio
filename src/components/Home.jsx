@@ -381,16 +381,16 @@ const Home = () => {
           ref={scrollContainerRef}
           className="w-full h-screen overflow-y-scroll snap-y snap-mandatory scroll-smooth"
         >
-          <div ref={heroContainerRef} className="relative w-full min-h-screen flex flex-col justify-center items-center px-6 md:px-24 lg:px-40 snap-start">
+          <div ref={heroContainerRef} className="relative w-full h-screen flex flex-col justify-center items-center px-6 md:px-24 lg:px-40 snap-start">
           <div ref={vibeRef} className="absolute top-[60%] right-[5%] w-[400px] h-[400px] rounded-full bg-[#FF800A] opacity-40 blur-[120px] z-0"></div>
             <div className="relative z-10 max-w-5xl">
-              <p className={`text-md mb-2 ${theme === "dark" ? "text-dark-secondary" : "text-light-secondary"}`}>
+              <p className={`text-md mb-2 ${theme === "dark" ? "text-[theme(colors.dark.secondary)]" : "text-[theme(colors.light.secondary)]"}`}>
                 Hi! I am <span className="text-accent hover:text-brand cursor-pointer uppercase">Kalpana Bhatt</span>
               </p>
-              <h1 ref={(el) => (textRef.current[0] = el)} className={`text-[2.75rem] md:text-[4rem] lg:text-[5.65rem] font-extrabold leading-[1.1] mb-8 ${theme === "dark" ? "text-dark-primary" : "text-light-primary"}`}>
+              <h1 ref={(el) => (textRef.current[0] = el)} className={`text-[2.75rem] md:text-[4rem] lg:text-[5.65rem] font-extrabold leading-[1.1] mb-8 ${theme === "dark" ? "text-[theme(colors.dark.primary)]" : "text-[theme(colors.light.primary)]"}`}>
                 Product Designer & Frontend Engineer
               </h1>
-              <p ref={(el) => (textRef.current[1] = el)} className={`text-md font-normal w-full sm:w-[90vw] md:w-[60vw] lg:w-[45vw] leading-relaxed ${theme === "dark" ? "text-dark-secondary" : "text-light-secondary"}`}>
+              <p ref={(el) => (textRef.current[1] = el)} className={`text-md font-normal w-full sm:w-[90vw] md:w-[60vw] lg:w-[45vw] leading-relaxed ${theme === "dark" ? "text-[theme(colors.dark.secondary)]" : "text-[theme(colors.light.secondary)]"}`}>
                 — daughter of a <span className="text-accent hover:text-brand cursor-pointer">supermom</span>, 
                 shaped by <span className="text-accent hover:text-brand cursor-pointer">equations</span>, 
                 powered by <span className="text-accent hover:text-brand cursor-pointer">lo-fi beats</span>, 
@@ -398,14 +398,14 @@ const Home = () => {
                 I turn <span className="text-accent hover:text-brand cursor-pointer">half-baked</span> ideas into elegant, scalable interfaces that just make sense.
               </p>
 
-              <div ref={(el) => (textRef.current[2] = el)} className={`mt-12 text-sm ${theme === "dark" ? "text-dark-accent" : "text-light-accent"}`}>
+              <div ref={(el) => (textRef.current[2] = el)} className={`mt-12 text-sm ${theme === "dark" ? "text-[theme(colors.dark.accent)]" : "text-[theme(colors.light.accent)]"}`}>
               🚧 Upcoming: Spotify Clone, E-commerce Dashboard, AI Chatbot
             </div>
 
             </div>
           </div>
           <div ref={workSectionRef} id="work-section" className="h-screen flex items-center justify-center snap-start">
-            <h2 className={`text-4xl ${theme === "dark" ? "text-dark-primary" : "text-light-primary"}`}>Case Studies Coming Soon...</h2>
+            <h2 className={`text-4xl ${theme === "dark" ? "text-[theme(colors.dark.primary)]" : "text-[theme(colors.light.primary)]"}`}>Case Studies Coming Soon...</h2>
           </div>
         </div>
       )}
