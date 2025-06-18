@@ -54,9 +54,11 @@ const Header = () => {
 
   return (
     <>
-      <div className={`w-[100%] flex justify-center items-center absolute z-20 ${theme === 'light' ? 'text-white' : 'text-black'}`}>
+      <div className={`w-full flex justify-center items-center absolute z-20 ${
+        theme === "dark" ? "text-dark-primary" : "text-light-primary"
+      }`}>
         <div className='container'>
-          <nav className="flex justify-between py-5 px-8">
+          <nav className="flex justify-between py-5">
             <div
               className="flex flex-col"
               data-cursor-hide="true"
@@ -65,7 +67,7 @@ const Header = () => {
                 onMouseOver={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
                 data-cursor-burst
-                className="font-medium transition-all duration-700 h-[1.85rem] hover:tracking-wider cursor-pointer"
+                className="font-medium h-[1.85rem] hover:tracking-wider cursor-pointer"
                 style={{
                   fontSize: '1.5rem',
                   lineHeight: '1.1',
@@ -85,14 +87,16 @@ const Header = () => {
               </span>
             </div>
 
-            <ul className="flex gap-8 text-secondary items-center">
+            <ul className={`flex gap-8 items-center ${
+              theme === "dark" ? "text-dark-secondary" : "text-light-secondary"
+            }`}>
               <li data-cursor-burst><NavLink to="/">Work</NavLink></li>
               <li data-cursor-burst><NavLink to="/">Design Lab</NavLink></li>
               <li data-cursor-burst><NavLink to="/">About</NavLink></li>
               <li data-cursor-burst><NavLink to="/">Resume</NavLink></li>
               <li data-cursor-burst>
-                <button onClick={toggleTheme} className="focus:outline-none border-[1px] border-[#b6b6b6] p-2 rounded-lg theme-toggle">
-                  <img src={theme === 'light' ? darkIcon : lightIcon} alt="Toggle Theme" className="w-4 " />
+                <button onClick={toggleTheme} className={`focus:outline-none border-[1px] border-[#b6b6b6] p-2 rounded-lg theme-toggle`}>
+                  <img src={theme === 'light' ? lightIcon : darkIcon} alt="Toggle Theme" className="w-4 " />
                 </button>
               </li>
             </ul>

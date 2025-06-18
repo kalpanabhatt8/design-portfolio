@@ -5,16 +5,17 @@ module.exports = {
     "./src/**/*.{js,jsx}",
   ],
   theme: {
-    // container: {
-    //   center: true,
-    //   padding: {
-    //     DEFAULT: '1.5rem',
-    //     sm: '2rem',
-    //     lg: '4rem',
-    //     xl: '5rem',
-    //     '2xl': '6rem',
-    //   },
-    // },
+    container: {
+      center: true,
+      padding: {
+        DEFAULT: '1.5rem', // px-6
+        sm: '1.5rem',
+        md: '4rem',        // px-24
+        lg: '5rem',       // px-40
+        xl: '4.1rem',
+        '2xl': '10rem',
+      },
+    },
     extend: {
       animation: {
         'spin-slow': 'spin 4s linear infinite'

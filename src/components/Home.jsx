@@ -381,9 +381,9 @@ const Home = () => {
           ref={scrollContainerRef}
           className="w-full h-screen overflow-y-scroll snap-y snap-mandatory scroll-smooth"
         >
-          <div ref={heroContainerRef} className="relative w-full h-screen flex flex-col justify-center items-center px-6 md:px-24 lg:px-40 snap-start">
+          <div ref={heroContainerRef} className="relative w-full h-screen flex flex-col justify-center px-6 md:px-24 lg:px-40 snap-start">
           <div ref={vibeRef} className="absolute top-[60%] right-[5%] w-[400px] h-[400px] rounded-full bg-[#FF800A] opacity-40 blur-[120px] z-0"></div>
-            <div className="relative z-10 max-w-5xl">
+            <div className="relative z-10 ">
               <p className={`text-md mb-2 ${theme === "dark" ? "text-[theme(colors.dark.secondary)]" : "text-[theme(colors.light.secondary)]"}`}>
                 Hi! I am <span className="text-accent hover:text-brand cursor-pointer uppercase">Kalpana Bhatt</span>
               </p>
