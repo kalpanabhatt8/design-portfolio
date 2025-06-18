@@ -2,12 +2,10 @@ import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 
 const CustomCursor = () => {
-  const cursorRef = useRef(null);
   const trailRefs = useRef([]);
   const [label, setLabel] = useState("");
 
   useEffect(() => {
-    const cursor = cursorRef.current;
     let requestId;
     let mouseX = 0;
     let mouseY = 0;
@@ -18,22 +16,44 @@ const CustomCursor = () => {
     trailRefs.current = Array.from({ length: trailCount }, (_, i) => trailRefs.current[i] || document.createElement("div"));
 
     trailRefs.current.forEach((el) => {
-      el.className = "fixed top-0 left-0 pointer-events-none z-[9998] text-[#FF800A] text-sm text-xl";
+      el.className = "fixed top-0 left-0 pointer-events-none z-[9998] text-[#FF800A] text-lg font-semibold select-none";
+      el.style.textShadow = "0 0 6px rgba(255, 128, 10, 0.5)";
+      el.style.transformOrigin = "center";
       el.textContent = "✦";
       document.body.appendChild(el);
+    });
+
+    trailRefs.current.forEach((el, i) => {
+      gsap.to(el, {
+        opacity: "+=0.05",
+        repeat: -1,
+        yoyo: true,
+        duration: 1.5 + i * 0.3,
+        ease: "sine.inOut",
+      });
+
+      gsap.to(el, {
+        scale: "+=0.1",
+        repeat: -1,
+        yoyo: true,
+        duration: 1.2 + i * 0.3,
+        ease: "sine.inOut",
+      });
     });
 
     const updatePosition = () => {
       cursorX += (mouseX - cursorX) * 0.1;
       cursorY += (mouseY - cursorY) * 0.1;
-      cursor.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0)`;
+
+      const angle = Math.atan2(mouseY - cursorY, mouseX - cursorX) * (180 / Math.PI);
 
       trailRefs.current.forEach((el, index) => {
         gsap.to(el, {
           x: mouseX,
           y: mouseY,
           scale: 1 - index * 0.1,
-          opacity: 0.15 - index * 0.02,
+          opacity: 0.05 + 0.02 * (trailCount - index),
+          rotation: angle,
           duration: 0.4 + index * 0.1,
           ease: "power3.out",
         });
@@ -46,25 +66,25 @@ const CustomCursor = () => {
       mouseX = e.clientX - 7;
       mouseY = e.clientY - 7;
 
-      const shouldHide = e.target.closest("[data-cursor-hide='true']");
-      cursor.style.display = shouldHide ? "none" : "block";
+      const isHover = e.target.closest("button, a");
 
-      const darkSection = e.target.closest("[data-cursor-dark='true']");
-      if (darkSection) {
-        cursor.style.backgroundColor = "#ffffff";
-        cursor.style.boxShadow = "0 0 6px #ffffff";
+      if (isHover) {
+        const glyphs = ["✦", "✧", "❉", "⭑"];
+        trailRefs.current.forEach((el, index) => {
+          el.textContent = glyphs[index % glyphs.length];
+        });
       } else {
-        cursor.style.backgroundColor = "#FF800A";
-        cursor.style.boxShadow = "0 0 6px #FF800A";
+        trailRefs.current.forEach((el) => {
+          el.textContent = "✦";
+        });
       }
 
-      const magnetTarget = e.target.closest("button, a");
-      if (magnetTarget) {
-        const rect = magnetTarget.getBoundingClientRect();
-        const offsetX = (e.clientX - (rect.left + rect.width / 2)) * 0.3;
-        const offsetY = (e.clientY - (rect.top + rect.height / 2)) * 0.3;
-        gsap.to(magnetTarget, { x: offsetX, y: offsetY, duration: 0.3, ease: "power3.out" });
-      }
+      const hoveredTag = e.target.tagName.toLowerCase();
+      const labelMap = {
+        button: "Click",
+        a: "Go →",
+      };
+      setLabel(labelMap[hoveredTag] || "");
     };
 
     const handleBurst = () => {
@@ -86,9 +106,36 @@ const CustomCursor = () => {
           onComplete: () => burst.remove(),
         }
       );
+
+      trailRefs.current.forEach((trail, index) => {
+        const clone = trail.cloneNode(true);
+        document.body.appendChild(clone);
+
+        gsap.fromTo(
+          clone,
+          { opacity: 0.3, scale: 1 },
+          {
+            opacity: 0,
+            scale: 2.5,
+            duration: 0.4 + index * 0.1,
+            ease: "power2.out",
+            onComplete: () => clone.remove(),
+          }
+        );
+      });
     };
 
     document.addEventListener("mousemove", handleMouseMove);
+    document.querySelectorAll("a, button").forEach((el) => {
+      el.addEventListener("mouseleave", () => {
+        gsap.to(el, {
+          x: 0,
+          y: 0,
+          duration: 0.3,
+          ease: "elastic.out(1, 0.3)",
+        });
+      });
+    });
     document.querySelectorAll("a, button, [data-cursor-burst]").forEach((el) => {
       el.addEventListener("click", handleBurst);
     });
@@ -105,26 +152,7 @@ const CustomCursor = () => {
     };
   }, []);
 
-  return (
-    <>
-      <div
-        ref={cursorRef}
-        className="fixed top-0 left-0 z-[9999] pointer-events-none flex items-center justify-center text-[10px] text-white font-semibold"
-        style={{
-          width: "0px",
-          height: "0px",
-          borderRadius: "50%",
-          backgroundColor: "transparent",
-          transition: "background-color 0.3s ease",
-          pointerEvents: "none",
-          display: "block",
-        }}
-      >
-        {label}
-      </div>
-    </>
-  );
+  return null;
 };
 
 export default CustomCursor;
-

@@ -2,6 +2,7 @@ import { Outlet, useLocation } from 'react-router-dom'
 import { useEffect } from "react"
 import Header from './components/Header'
 import CustomCursor from './components/CustomCursor'
+import { ThemeProvider } from "./utils/ThemeContext";
 const Layout = () => {
     const { pathname } = useLocation()
     useEffect(() => {
@@ -50,9 +51,11 @@ const Layout = () => {
 
     return (
         <div className="min-h-screen bg-hero-pattern bg-cover bg-center">
+            <ThemeProvider>
               <CustomCursor />
-            {/* <Header/> */}
+            <Header/>
             <Outlet />
+            </ThemeProvider>
         </div>
     )
 }
