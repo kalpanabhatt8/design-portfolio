@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
 import { RouterProvider, createBrowserRouter, useLocation } from 'react-router-dom';
+import { ThemeProvider } from './utils/ThemeContext';
 import './index.css';
 import Layout from './Layout';
 import Home from './components/Home';
@@ -35,9 +36,11 @@ const router = createBrowserRouter([
   },
 ]);
 
-// Render the app with RouterProvider
+// Render the app with RouterProvider wrapped in ThemeProvider
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <ThemeProvider>
+      <RouterProvider router={router} />
+    </ThemeProvider>
   </React.StrictMode>
 );

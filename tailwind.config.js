@@ -7,13 +7,13 @@ module.exports = {
   theme: {
     container: {
       center: true,
-      padding: {
-        DEFAULT: '1.5rem', // px-6
-        sm: '1.5rem',
-        md: '4rem',        // px-24
-        lg: '5rem',       // px-40
-        xl: '4.1rem',
-        '2xl': '10rem',
+      padding: '1.5rem',
+      screens: {
+        sm: '640px',
+        md: '768px',
+        lg: '940px',
+        xl: '940px',
+        '2xl': '840px',
       },
     },
     extend: {
@@ -36,15 +36,23 @@ module.exports = {
       colors: {
         light: {
           background: '#F9F9F9',
-          primary: '#1C1C1E',
-          secondary: '#4A4A4A',
-          accent: '#FF800A',
+          foreground: '#FFFFFF',
+          text: '#1C1C1E',        // High contrast body text
+          muted: '#4A4A4A',        // Secondary, less emphasized
+          disabled: '#969696',     // Grayed-out elements
+          border: '#E4E4E7',       // Subtle divider lines
+          hover: '#2F2F2F',        // Hover on light backgrounds
+          accent: '#FF800A',       // Brand highlight
         },
         dark: {
           background: '#030100',
-          primary: '#FFFFFF',
-          secondary: '#AAAAAA',
-          accent: '#FF800A',
+          foreground: '#1C1C1E',
+          text: '#FFFFFF',         // Main text
+          muted: '#AAAAAA',        // Secondary, less emphasis
+          disabled: '#969696',     // Grayed-out states
+          border: '#2F2F2F',       // Low-contrast border
+          hover: '#F9F9F9',        // Inverse hover for dark bg
+          accent: '#FF800A',       // Brand highlight
         },
       },
     },

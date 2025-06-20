@@ -10,6 +10,7 @@ const LoadingScreen = ({
   dotRefs,
   statusRef,
   blurRef,
+  theme,
 }) => {
   useEffect(() => {
     if (isLoading) {
@@ -101,14 +102,14 @@ const LoadingScreen = ({
   return (
     <div
       ref={loaderRef}
-      className="absolute inset-0 z-50 flex items-center justify-center h-screen w-full bg-[#0a0d10] text-white font-bricolage overflow-hidden transition-all duration-500 ease-in-out"
+      className="absolute inset-0 z-50 flex items-center justify-center h-screen w-full bg-[#fdfdf8] text-black font-bricolage overflow-hidden transition-all duration-500 ease-in-out"
     >
       <div className="absolute inset-0 z-0 pointer-events-none">
         {["const", "return", "{ }", "div", "<button>", "useState", "=>"].map((word, index) => (
           <span
             key={index}
             ref={(el) => (floatingRefs.current[index] = el)}
-            className="absolute text-sm text-[#FF9D41] opacity-20"
+            className="absolute text-sm text-[#c2c2c2] opacity-10"
             style={{
               top: `${Math.random() * 100}%`,
               left: `${Math.random() * 100}%`,
@@ -121,12 +122,23 @@ const LoadingScreen = ({
 
       <div
         ref={blurRef}
-        className="transform absolute w-[600px] h-[600px] bg-gradient-to-tr from-[#FF800A] via-transparent to-[#1A1D23] rounded-full opacity-30 animate-pulse blur-3xl z-0"
+        className="transform absolute w-[600px] h-[600px] bg-gradient-to-tr from-[#ffeede] via-transparent to-[#fdfdf8] rounded-full opacity-30 animate-pulse blur-3xl z-0"
       />
+
+      <div className="absolute top-4 right-4 z-50">
+        <button
+          onClick={() => alert("Settings coming soon!")}
+          className={`w-8 h-8 flex items-center justify-center rounded-md border ${
+            theme === 'dark' ? 'border-white text-white' : 'border-black text-black'
+          } hover:opacity-80 transition-opacity duration-300`}
+        >
+          ⚙️
+        </button>
+      </div>
 
       <div className="z-10 text-center">
         <div className="flex flex-row gap-1 justify-center items-center">
-          <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight mb-4 text-white">
+          <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight mb-4 text-light-text">
             Loading
           </h1>
           <div className="flex justify-center gap-1 mb-2 items-center">
@@ -134,24 +146,24 @@ const LoadingScreen = ({
               <span
                 key={i}
                 ref={(el) => (dotRefs.current[i] = el)}
-                className="inline-block w-1.5 h-1.5 bg-[#E5E7EB] rounded-full"
+                className="inline-block w-1.5 h-1.5 bg-light-text rounded-full"
               ></span>
             ))}
           </div>
         </div>
-        <p className="text-sm italic text-[#ffb774]" ref={statusRef}>
+        <p className="text-sm italic text-[#e85a00]" ref={statusRef}>
           (this might take longer if it’s Monday)
         </p>
       </div>
       <div className="absolute bottom-[80px] flex justify-center w-full z-50 ">
-        <div className="w-[120px] h-1.5 rounded-full overflow-hidden bg-[#1A1D23] border border-[#FF9D41]/50 shadow-inner shadow-[#FF800A]/20">
+        <div className="w-[120px] h-1.5 rounded-full overflow-hidden bg-[#f5f1ea] border border-[#e85a00]/40 shadow-inner shadow-[#FF800A]/20">
           <div
             ref={loaderLineRef}
             className="h-full rounded-full"
             style={{
               width: "0%",
-              background: "linear-gradient(to right, #FF800A, #FFB347)",
-              boxShadow: "0 0 12px #FF800A",
+              background: "linear-gradient(to right, #ff6a00, #ffc285)",
+              boxShadow: "0 0 12px #e85a00",
               transition: "width 0.2s ease-in-out",
             }}
           />

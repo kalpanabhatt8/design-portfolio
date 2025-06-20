@@ -10,23 +10,34 @@ body {
 
 }
 
-.dark{
-  background-color: #030100;
+.dark body {
+  background-color: transparent;
 }
 
-.light{
-  background-color: #ffffff;
+.light body {
+  background-color: transparent;
 }
 
 body::before {
   content: "";
   position: fixed;
   inset: 0;
-  z-index: -1;
   background-image: url("/textures/grid-texture.png");
   background-repeat: repeat;
-  opacity: 0.7; /* <-- safe opacity control */
+  background-size: auto;
+  z-index: 1; /* temporarily higher to make sure it renders */
+  pointer-events: none;
 }
+
+
+body[data-theme="light"]::before {
+  opacity: 0.2;
+}
+
+body[data-theme="dark"]::before {
+  opacity: 0.4;
+}
+
 
 .custom-cursor {
   position: absolute;
@@ -69,3 +80,13 @@ body {
   100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
 }
 
+
+li{
+  font-size: 0.85rem;
+}
+
+.black-ops-one-regular {
+  font-family: "Black Ops One", system-ui;
+  font-weight: 400;
+  font-style: normal;
+}

@@ -15,7 +15,22 @@ const Header = () => {
   const [lineIndex, setLineIndex] = useState(0);
   const timeoutRef = useRef(null);
 
-  const { theme, toggleTheme } = useTheme();
+  const { theme, toggleTheme, showQuickLoader } = useTheme();
+
+  if (showQuickLoader) {
+    return (
+      <div className={`fixed inset-0 flex items-center justify-center z-[9999] transition-all duration-300 ${
+        theme === 'dark' ? 'bg-[#030100] text-white' : 'bg-[#fdfdf8] text-black'
+      }`}>
+        <div className="text-center">
+          <p className="text-lg font-medium mb-2">Applying theme...</p>
+          <div className="w-32 h-1.5 bg-gray-300 overflow-hidden rounded-full">
+            <div className="h-full bg-accent animate-pulse w-full"></div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -54,9 +69,8 @@ const Header = () => {
 
   return (
     <>
-      <div className={`w-full flex justify-center items-center absolute z-20 ${
-        theme === "dark" ? "text-dark-primary" : "text-light-primary"
-      }`}>
+      <div className={`w-full flex justify-center items-center absolute z-20 ${theme === "dark" ? "text-dark-text" : "text-light-text"
+        }`}>
         <div className='container'>
           <nav className="flex justify-between py-5">
             <div
@@ -67,33 +81,68 @@ const Header = () => {
                 onMouseOver={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
                 data-cursor-burst
-                className="font-medium h-[1.85rem] hover:tracking-wider cursor-pointer"
+                className="font-medium h-[1.85rem] hover:tracking-wider cursor-pointer border-1 border-"
                 style={{
                   fontSize: '1.5rem',
-                  lineHeight: '1.1',
-                  marginBottom:"0px",
+                  marginBottom: "0px",
                   letterSpacing: '0.5px',
                   zIndex: 567
                 }}
               >
-                Kalpana Bhatt
+                Prashant Singh
               </h1>
-              <span
-                className={`text-xs text-[#8a8a8a] italic transition-opacity duration-700 font-normal ${
-                  fadeIn ? 'opacity-100' : 'opacity-0'
-                }`}
-              >
-                {wittyLines[lineIndex]}
-              </span>
+              <div className="absolute top-12 w-full z-20">
+                <span
+                  className={`text-xs text-[#8a8a8a] italic transition-opacity duration-700 font-normal ${fadeIn ? 'opacity-100' : 'opacity-0'
+                    }`}
+                >
+                  {wittyLines[lineIndex]}
+                </span>
+              </div>
             </div>
 
-            <ul className={`flex gap-8 items-center ${
-              theme === "dark" ? "text-dark-secondary" : "text-light-secondary"
-            }`}>
-              <li data-cursor-burst><NavLink to="/">Work</NavLink></li>
-              <li data-cursor-burst><NavLink to="/">Design Lab</NavLink></li>
-              <li data-cursor-burst><NavLink to="/">About</NavLink></li>
-              <li data-cursor-burst><NavLink to="/">Resume</NavLink></li>
+            <ul className={`flex gap-8 items-center ${theme === "dark" ? "text-dark-text" : "text-light-text"
+              }`}>
+              <li data-cursor-burst>
+                <NavLink
+                  to="/"
+                  className={({ isActive }) =>
+                    isActive ? 'text-accent font-medium' : 'opacity-70 hover:opacity-100'
+                  }
+                >
+                  Work
+                </NavLink>
+              </li>
+              <li data-cursor-burst>
+                <NavLink
+                  to="/design-lab"
+                  className={({ isActive }) =>
+                    isActive ? 'text-accent font-medium' : 'opacity-70 hover:opacity-100'
+                  }
+                >
+                  Design Lab
+                </NavLink>
+              </li>
+              <li data-cursor-burst>
+                <NavLink
+                  to="/about"
+                  className={({ isActive }) =>
+                    isActive ? 'text-accent font-medium' : 'opacity-70 hover:opacity-100'
+                  }
+                >
+                  About
+                </NavLink>
+              </li>
+              <li data-cursor-burst>
+                <NavLink
+                  to="/resume"
+                  className={({ isActive }) =>
+                    isActive ? 'text-accent font-medium' : 'opacity-70 hover:opacity-100'
+                  }
+                >
+                  Resume
+                </NavLink>
+              </li>
               <li data-cursor-burst>
                 <button onClick={toggleTheme} className={`focus:outline-none border-[1px] border-[#b6b6b6] p-2 rounded-lg theme-toggle`}>
                   <img src={theme === 'light' ? lightIcon : darkIcon} alt="Toggle Theme" className="w-4 " />

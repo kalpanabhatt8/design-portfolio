@@ -1,7 +1,7 @@
 import gsap from 'gsap';
 import React, { useEffect } from 'react';
 
-const LoadingScreen = ({
+const DarkLoader = ({
   isLoading,
   setIsLoading,
   loaderRef,
@@ -45,7 +45,26 @@ const LoadingScreen = ({
       }, "+=0");
 
       setTimeout(() => {
-        setIsLoading(false);
+        if (loaderRef.current) {
+          const exitTimeline = gsap.timeline({
+            onComplete: () => setIsLoading(false)
+          });
+
+          exitTimeline
+            .to(loaderRef.current, {
+              scale: 1.05,
+              duration: 0.3,
+              ease: "power1.out"
+            })
+            .to(loaderRef.current, {
+              scale: 1.2,
+              opacity: 0,
+              duration: 0.6,
+              ease: "power2.inOut"
+            });
+        } else {
+          setIsLoading(false);
+        }
       }, 6000);
 
       setTimeout(() => {
@@ -142,4 +161,4 @@ const LoadingScreen = ({
   );
 };
 
-export default LoadingScreen;
+export default DarkLoader;
