@@ -25,7 +25,7 @@ body::before {
   background-image: url("/textures/grid-texture.png");
   background-repeat: repeat;
   background-size: auto;
-  z-index: 1; /* temporarily higher to make sure it renders */
+  z-index: 1; 
   pointer-events: none;
 }
 
@@ -38,18 +38,15 @@ body[data-theme="dark"]::before {
   opacity: 0.4;
 }
 
-
+/* 
 .custom-cursor {
   position: absolute;
-  /* width: 6px;
-  height: 6px; */
   background-color:transparent !important;
   box-shadow: none !important;
-  /* box-shadow: 0 0 4px #ff9d41; */
   pointer-events: none;
   border: none !important;
   z-index: 10000;
-}
+} */
 
 h1, h2, h3, h4 {
   font-family: "Bricolage Grotesque", sans-serif;
@@ -59,19 +56,10 @@ h1, h2, h3, h4 {
 /* Hide the default system cursor */
 
 .cursor-dot {
-  /* background-color: #FF800A; */
-  /* width: 8px;
-  height: 8px; */
-  /* border-radius: 50%;
-  box-shadow: 0 0 6px #FF800A; */
   position: fixed;
   pointer-events: none;
   z-index: 9999;
   transition: transform 0.1s ease;
-}
-
-body {
-  cursor: none;
 }
 
 @keyframes sparklePulse {

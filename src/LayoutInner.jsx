@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom';
 import { useTheme } from './utils/ThemeContext';
-import CustomCursor from './components/CustomCursor';
+// import CustomCursor from './components/CustomCursor';
 import Header from './components/Header';
 
 const LayoutInner = () => {
@@ -36,7 +36,7 @@ const LayoutInner = () => {
           theme === "dark" ? "text-dark-text" : "text-light-text"
         }`}
       >
-        <CustomCursor />
+        {/* <CustomCursor /> */}
         <Header />
         <Outlet />
       </div>

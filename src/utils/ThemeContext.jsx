@@ -9,21 +9,29 @@ export const ThemeProvider = ({ children }) => {
   );
 
   useEffect(() => {
-    document.body.classList.remove("light", "dark");
-    document.body.classList.add(theme);
-    document.body.setAttribute("data-theme", theme);
+    const body = document.body;
 
-    if (theme === "dark") {
-      document.body.style.backgroundImage = "url('../assets/grid-texture.png')";
-      document.body.style.backgroundRepeat = "repeat";
-      // document.body.style.backgroundColor = "#030100";
-    } else {
-      document.body.style.backgroundImage = "url('../assets/grid-texture.png')";
-      document.body.style.backgroundRepeat = "repeat";
-      // document.body.style.backgroundColor = "#F9F9F9";
-    }
+    // Add transition class
+    body.classList.add('theme-transition');
 
+    // Set theme class and attributes
+    body.classList.remove("light", "dark");
+    body.classList.add(theme);
+    body.setAttribute("data-theme", theme);
+
+    // Set background
+    body.style.backgroundImage = `url('${texture}')`;
+    body.style.backgroundRepeat = "repeat";
+
+    // Save theme to localStorage
     localStorage.setItem("theme", theme);
+
+    // Remove transition class after animation
+    const timeout = setTimeout(() => {
+      body.classList.remove('theme-transition');
+    }, 500);
+
+    return () => clearTimeout(timeout);
   }, [theme]);
 
   const toggleTheme = () => {

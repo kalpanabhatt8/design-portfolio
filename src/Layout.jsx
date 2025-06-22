@@ -1,7 +1,7 @@
 import { useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import Header from './components/Header';
-import CustomCursor from './components/CustomCursor';
+// import CustomCursor from './components/CustomCursor';
 import { ThemeProvider } from "./utils/ThemeContext";
 import LayoutInner from './LayoutInner';
 

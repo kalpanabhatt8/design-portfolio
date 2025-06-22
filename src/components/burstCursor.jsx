@@ -10,7 +10,7 @@ const wittyLines = [
   "Yes, with two T’s."
 ];
 
-const Header = () => {
+const BurstCursor = () => {
   const [fadeIn, setFadeIn] = useState(false);
   const [lineIndex, setLineIndex] = useState(0);
   const timeoutRef = useRef(null);
@@ -60,10 +60,12 @@ const Header = () => {
           <nav className="flex justify-between py-5">
             <div
               className="flex flex-col"
+              data-cursor-hide="true"
             >
               <h1
                 onMouseOver={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
+                data-cursor-burst
                 className="font-medium h-[1.85rem] hover:tracking-wider cursor-pointer border-1 border-"
                 style={{
                   fontSize: '1.5rem',
@@ -86,7 +88,7 @@ const Header = () => {
 
             <ul className={`flex gap-8 items-center ${theme === "dark" ? "text-dark-text" : "text-light-text"
               }`}>
-              <li>
+              <li data-cursor-burst>
                 <NavLink
                   to="/"
                   className={({ isActive }) =>
@@ -96,7 +98,7 @@ const Header = () => {
                   Work
                 </NavLink>
               </li>
-              <li >
+              <li data-cursor-burst>
                 <NavLink
                   to="/design-lab"
                   className={({ isActive }) =>
@@ -106,7 +108,7 @@ const Header = () => {
                   Design Lab
                 </NavLink>
               </li>
-              <li>
+              <li data-cursor-burst>
                 <NavLink
                   to="/about"
                   className={({ isActive }) =>
@@ -116,7 +118,7 @@ const Header = () => {
                   About
                 </NavLink>
               </li>
-              <li>
+              <li data-cursor-burst>
                 <NavLink
                   to="/resume"
                   className={({ isActive }) =>
@@ -126,7 +128,7 @@ const Header = () => {
                   Resume
                 </NavLink>
               </li>
-              <li>
+              <li data-cursor-burst>
                 <button onClick={toggleTheme} className={`focus:outline-none border-[1px] border-[#b6b6b6] p-2 rounded-lg theme-toggle`}>
                   <img src={theme === 'light' ? lightIcon : darkIcon} alt="Toggle Theme" className="w-4 " />
                 </button>
@@ -139,4 +141,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default BurstCursor;

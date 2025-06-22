@@ -5,7 +5,7 @@ import thumbnailURL from "../assets/shreyaji.png";
 import ytIcon from "../assets/youtube-color-icon.svg";
 import LoadingScreen from "./LoadingScreen";
 
-const Home = () => {
+const HomeBackup = () => {
   const [isLoading, setIsLoading] = useState(true);
   const ytIconRef = useRef(null);
   const vibeRef = useRef(null);
@@ -270,4 +270,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default HomeBackup;

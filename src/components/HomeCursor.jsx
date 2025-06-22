@@ -9,7 +9,7 @@ import { useTheme } from "../utils/ThemeContext";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const Home = () => {
+const HomeCursor = () => {
   const { theme } = useTheme();
   const [isLoading, setIsLoading] = useState(true);
   const ytIconRef = useRef(null);
@@ -28,7 +28,7 @@ const Home = () => {
   let heroRef = null;
 
   useEffect(() => {
-    // const cursor = document.getElementById("custom-cursor");
+    const cursor = document.getElementById("custom-cursor");
 
     const moveCursor = (e) => {
       gsap.to(cursor, {
@@ -75,6 +75,7 @@ const Home = () => {
     };
   }, []);
 
+  const loadingStatuses = ["debugging...", "hydrating code...", "calming dev anxiety..."];
   const sentence =
     " — daughter of a supermom, shaped by equations, powered by lo-fi beats, now designing clarity out of chaos. I turn half-baked ideas into elegant, scalable interfaces that just make sense.";
   const words = sentence.split(" ");
@@ -225,7 +226,7 @@ const Home = () => {
           setIsLoading(false);
         },
       });
-    }, 2000);
+    }, 6000);
 
     // Progress bar: 0% to 80% fast, then 80% to 100% slow and subtle
     const progressTimeline = gsap.timeline();
@@ -303,6 +304,33 @@ const Home = () => {
       }
     }, 0);
 
+    setTimeout(() => {
+      if (statusRef.current) {
+        const msg = loadingStatuses[Math.floor(Math.random() * loadingStatuses.length)];
+        gsap.to(statusRef.current, {
+          opacity: 0,
+          duration: 0.2,
+          onComplete: () => {
+            statusRef.current.textContent = msg;
+            gsap.to(statusRef.current, {
+              opacity: 1,
+              duration: 0.4,
+              ease: "power2.out",
+            });
+            gsap.fromTo(
+              statusRef.current,
+              { scale: 1.05, rotation: 1 },
+              {
+                scale: 1,
+                rotation: 0,
+                duration: 0.6,
+                ease: "back.out(1.7)",
+              }
+            );
+          },
+        });
+      }
+    }, 5000);
 
     return () => {
       clearTimeout(timeout);
@@ -385,4 +413,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default HomeCursor;

@@ -37,22 +37,24 @@ module.exports = {
         light: {
           background: '#F9F9F9',
           foreground: '#FFFFFF',
-          text: '#1C1C1E',        // High contrast body text
+          text: '#1C1C1E',
+          neutral:"#7a8096",        // High contrast body text
           muted: '#4A4A4A',        // Secondary, less emphasized
           disabled: '#969696',     // Grayed-out elements
           border: '#E4E4E7',       // Subtle divider lines
           hover: '#2F2F2F',        // Hover on light backgrounds
-          accent: '#FF800A',       // Brand highlight
+          accent: '#5C82FF',       // Lighter variant for better contrast on light theme
         },
         dark: {
           background: '#030100',
           foreground: '#1C1C1E',
           text: '#FFFFFF',         // Main text
+          neutral:"#d1d6eb",
           muted: '#AAAAAA',        // Secondary, less emphasis
           disabled: '#969696',     // Grayed-out states
           border: '#2F2F2F',       // Low-contrast border
           hover: '#F9F9F9',        // Inverse hover for dark bg
-          accent: '#FF800A',       // Brand highlight
+          accent: '#7caeff',       // Brand highlight     // Brand highlight
         },
       },
     },
